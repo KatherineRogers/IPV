@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.katie.hrubiec_katheirne_getmethere.R;
+import com.example.katie.hrubiec_katheirne_getmethere.objects.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -21,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class CreateAccountFrag extends Fragment implements View.OnClickListener {
 
@@ -34,6 +37,7 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
     private EditText etPass;
     private EditText etEmail;
     private EditText etName;
+    DatabaseReference databaseUsers;
 
     public static CreateAccountFrag newInstance() {
 
@@ -59,6 +63,7 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
         Button create = getView().findViewById(R.id.createAccount);
         create.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -77,9 +82,9 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
         if (!checkFormFields())
             return;
 
-        String email = etEmail.getText().toString();
-        String password = etPass.getText().toString();
-        String name = etName.getText().toString();
+        final String email = etEmail.getText().toString();
+        final String password = etPass.getText().toString();
+        final String name = etName.getText().toString();
 
         // TODO: Create the user account
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -88,8 +93,12 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
                 if(task.isSuccessful()){
                     Log.v("CLICK", "user was created");
                     mAuth.getCurrentUser().getUid();
-                    
+                    //add user to database
+                    String userId = mAuth.getCurrentUser().getUid();
+                    Log.v("CLICK","user id:"+userId);
 
+                    User newUser = new User(email,password,name);
+                    databaseUsers.child(userId).setValue(newUser);
                 }else{
                     Log.v("CLICK", "account creation failed");
                 }

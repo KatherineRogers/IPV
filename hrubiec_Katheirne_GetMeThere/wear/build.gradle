@@ -36,3 +36,9 @@ dependencies {
     implementation 'com.android.support:wear:26.1.0'
 }
 
+
+apply plugin: 'com.google.gms.google-services'
+
+dependencies {
+    implementation 'com.google.firebase:firebase-database:11.8.0'
+}
