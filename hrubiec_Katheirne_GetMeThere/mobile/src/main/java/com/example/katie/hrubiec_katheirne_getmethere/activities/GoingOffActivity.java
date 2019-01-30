@@ -34,11 +34,11 @@ public class GoingOffActivity extends AppCompatActivity {
             tv = findViewById(R.id.timeofalarm);
             tv.setText(new SimpleDateFormat("h:mm a").format(alarmGoingOFf.getWakeUpBefore()));
 
-            for(int i=0; i<MainActivity.alarms.size(); ++i){
-                if(MainActivity.alarms.get(i).getIdentifier() == alarmGoingOFf.getIdentifier()){
-                    MainActivity.alarms.remove(i);
+            for(int i=0; i<ListActivity.alarms.size(); ++i){
+                if(ListActivity.alarms.get(i).getIdentifier() == alarmGoingOFf.getIdentifier()){
+                    ListActivity.alarms.remove(i);
                     Log.v("REMOVE","removed alarm");
-                    MainActivity.writeObjectInCache(this, MainActivity.READWRITEOBJ, MainActivity.alarms);
+                    ListActivity.writeObjectInCache(this, ListActivity.READWRITEOBJ, ListActivity.alarms);
                 }
             }
 

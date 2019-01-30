@@ -33,7 +33,7 @@
         <activity android:name=".activities.AlarmActivity" />
         <activity android:name=".activities.GoingOffActivity" />
         <activity android:name=".activities.DetailsActivity" />
-
+        <activity android:name=".activities.ListActivity"/>
         <receiver android:name=".objects.AlarmReceiver" />
 
         <meta-data

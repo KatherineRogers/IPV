@@ -50,8 +50,8 @@ public class AlarmActivity extends AppCompatActivity implements AlarmFrag.Finsih
 
     @Override
     public void finishAdd(Alarm newAlarm) {
-        MainActivity.alarms.add(newAlarm);
-        MainActivity.writeObjectInCache(getApplicationContext(), MainActivity.READWRITEOBJ, MainActivity.alarms);
+        ListActivity.alarms.add(newAlarm);
+        ListActivity.writeObjectInCache(getApplicationContext(), ListActivity.READWRITEOBJ, ListActivity.alarms);
         Intent mainActIntent = new Intent(this, MainActivity.class);
         setResult(RESULT_OK, mainActIntent);
 

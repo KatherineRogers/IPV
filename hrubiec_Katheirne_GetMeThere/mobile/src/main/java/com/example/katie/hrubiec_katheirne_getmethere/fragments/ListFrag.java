@@ -44,6 +44,7 @@ public class ListFrag extends ListFragment {
         void deleteAlarm(int position);
 
         void viewAlarm(int position);
+        void signOut();
     }
 
     @Override
@@ -104,7 +105,12 @@ public class ListFrag extends ListFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mListener.addNew();
+        if(item.getItemId() == R.id.add){
+            mListener.addNew();
+        }else if(item.getItemId() == R.id.signOut){
+            mListener.signOut();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
