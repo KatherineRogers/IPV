@@ -131,7 +131,7 @@ public class SignInFragment extends Fragment implements OnClickListener {
             @Override
             public void onFailure(@NonNull Exception e) {
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    etEmail.setError("Invalid password");
+                    etPass.setError("Invalid password");
                 } else if (e instanceof FirebaseAuthInvalidUserException) {
                     etEmail.setError("No account with this email");
                 } else {

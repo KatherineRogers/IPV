@@ -15,8 +15,9 @@ public class Alarm implements Serializable {
     long identifier;
     String imageuri;
     String sounduri;
+    String userID;
 
-    public Alarm(long departureTime, long arrivalTime, long durationInTraffic, String startingLoc, String endingLoc, long wakeUpBefore, long identifier,String imageuri, String sounduri) {
+    public Alarm(long departureTime, long arrivalTime, long durationInTraffic, String startingLoc, String endingLoc, long wakeUpBefore, long identifier,String imageuri, String sounduri, String userID) {
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.durationInTraffic = durationInTraffic;
@@ -26,6 +27,8 @@ public class Alarm implements Serializable {
         this.identifier = identifier;
         this.imageuri = imageuri;
         this.sounduri = sounduri;
+        this.userID = userID;
+
     }
 
     @Override
@@ -69,6 +72,9 @@ public class Alarm implements Serializable {
         return sounduri;
     }
 
+    public String getUserID() {
+        return userID;
+    }
 
     public void setDepartureTime(long departureTime) {
         this.departureTime = departureTime;
@@ -105,4 +111,5 @@ public class Alarm implements Serializable {
     public void setSounduri(String sounduri) {
         this.sounduri = sounduri;
     }
+
 }

@@ -66,8 +66,9 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
         //save alarm to list, firebase database, set alarms
 
 
-        ListActivity.alarms.add(newAlarm);
-        ListActivity.writeObjectInCache(getApplicationContext(), ListActivity.READWRITEOBJ, ListActivity.alarms);
+        //ListActivity.alarms.add(newAlarm);
+        ListActivity.saveToFirebase(newAlarm);
+        //ListActivity.writeObjectInCache(getApplicationContext(), ListActivity.READWRITEOBJ, ListActivity.alarms);
         Intent mainActIntent = new Intent(this, ListActivity.class);
         setResult(RESULT_OK, mainActIntent);
 

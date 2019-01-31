@@ -40,6 +40,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -149,10 +151,12 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
                 if (departureTime + durationInTraffic < System.currentTimeMillis() + durationInTraffic) {
                     showWarning();
                 } else {
+                    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                    String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     if(wakeUpCalled==false){
-                        mListener.finishAdd(new Alarm(departureTime, arrivalTimeChosen, durationInTraffic,startingLoc, endingLoc, departureTime, System.currentTimeMillis(), "",""));
+                        mListener.finishAdd(new Alarm(departureTime, arrivalTimeChosen, durationInTraffic,startingLoc, endingLoc, departureTime, System.currentTimeMillis(), "","", userID));
                     }else{
-                        mListener.finishAdd(new Alarm(departureTime, arrivalTimeChosen, durationInTraffic,startingLoc, endingLoc, wakeUpTime,System.currentTimeMillis(),"",""));
+                        mListener.finishAdd(new Alarm(departureTime, arrivalTimeChosen, durationInTraffic,startingLoc, endingLoc, wakeUpTime,System.currentTimeMillis(),"","",userID));
                     }
                 }
                 break;
