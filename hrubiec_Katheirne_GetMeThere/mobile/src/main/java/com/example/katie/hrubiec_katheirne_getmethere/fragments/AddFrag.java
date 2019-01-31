@@ -107,6 +107,7 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
         super.onActivityCreated(savedInstanceState);
         Button btn = getView().findViewById(R.id.search);
         btn.setOnClickListener(this);
+
     }
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -141,10 +142,10 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
 
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            map.setMyLocationEnabled(true);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
-            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            centreMapOnLocation(lastKnownLocation,"Your Location");
+            //map.setMyLocationEnabled(true);
+            //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+            //Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            //centreMapOnLocation(lastKnownLocation,"Your Location");
         } else if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }

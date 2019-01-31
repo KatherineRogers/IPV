@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -17,7 +19,8 @@
         android:theme="@style/AppTheme">
         <receiver android:name=".objects.AlarmReceiver" />
 
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity"
+            android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,13 +32,20 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyACz6AjczEW5-jt3EW6lYsmjfO84U2W3jI" />
 
-        <activity android:name=".activities.AddActivity" />
-        <activity android:name=".activities.AlarmActivity" />
-        <activity android:name=".activities.GoingOffActivity" />
-        <activity android:name=".activities.DetailsActivity" />
-        <activity android:name=".activities.ListActivity"/>
-        <activity android:name=".activities.CreateAccountActivity"/>
-        <activity android:name=".activities.AlarmSettingsActivity"/>
+        <activity android:name=".activities.AddActivity"
+            android:label="Add New Alarm"/>
+        <activity android:name=".activities.AlarmActivity"
+            android:label="Add New Alarm"/>
+        <activity android:name=".activities.GoingOffActivity"
+            android:label=""/>
+        <activity android:name=".activities.DetailsActivity"
+            android:label="Alarm Details"/>
+        <activity android:name=".activities.ListActivity"
+            android:label="Alarms"/>
+        <activity android:name=".activities.CreateAccountActivity"
+            android:label=""/>
+        <activity android:name=".activities.AlarmSettingsActivity"
+            android:label="Add New Alarm"/>
         <receiver android:name=".objects.AlarmReceiver" />
 
 

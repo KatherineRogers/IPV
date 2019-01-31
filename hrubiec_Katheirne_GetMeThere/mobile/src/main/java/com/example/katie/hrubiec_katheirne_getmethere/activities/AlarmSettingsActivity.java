@@ -65,7 +65,8 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
 
         //save alarm to list, firebase database, set alarms
 
-
+        Log.v("CLICK","asa - " + alarm.getImageuri());
+        Log.v("CLICK","asa - " + alarm.getSounduri());
         //ListActivity.alarms.add(newAlarm);
         ListActivity.saveToFirebase(newAlarm);
         //ListActivity.writeObjectInCache(getApplicationContext(), ListActivity.READWRITEOBJ, ListActivity.alarms);
@@ -141,9 +142,12 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
         } else if (resultCode == Activity.RESULT_OK && requestCode == SELECT_PICTURE) {
             Uri imageUri = intent.getData();
             if (imageUri != null) {
+
                 this.chosenImage = imageUri.toString();
-                Log.v("CLICK", "uri for image: " + chosenImage);
+                Log.v("CLICK", "uri for image: " + imageUri);
                 alarm.setImageuri(chosenImage);
+                Log.v("CLICK", "uri for image: " + alarm.getImageuri());
+
                 loadFrag();
             } else {
                 this.chosenImage = null;

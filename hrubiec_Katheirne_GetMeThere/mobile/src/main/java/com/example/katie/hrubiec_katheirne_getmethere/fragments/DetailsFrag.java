@@ -2,6 +2,8 @@ package com.example.katie.hrubiec_katheirne_getmethere.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,11 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
@@ -60,6 +65,10 @@ public class DetailsFrag extends Fragment implements View.OnClickListener {
         tv.setText(new SimpleDateFormat("h:mm a").format(alarm.getWakeUpBefore()));
         Button btn = getView().findViewById(R.id.gmapsButton);
         btn.setOnClickListener(this);
+        ImageView iv = getView().findViewById(R.id.image);
+
+        Uri imageURI = Uri.parse(alarm.getImageuri());
+        iv.setImageURI(imageURI);
     }
 
 

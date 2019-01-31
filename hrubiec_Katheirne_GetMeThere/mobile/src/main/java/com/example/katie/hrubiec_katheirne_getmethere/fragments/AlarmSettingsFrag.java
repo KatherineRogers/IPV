@@ -1,6 +1,7 @@
 package com.example.katie.hrubiec_katheirne_getmethere.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +22,7 @@ import android.widget.TextView;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 
-public class AlarmSettingsFrag extends Fragment implements View.OnClickListener{
+public class AlarmSettingsFrag extends Fragment implements View.OnClickListener {
 
     AddDetailItemListener mListener;
     private static final String ARG_ALARM = "ARG_ALARM";
@@ -53,7 +54,9 @@ public class AlarmSettingsFrag extends Fragment implements View.OnClickListener{
 
     public interface AddDetailItemListener {
         void addSound();
+
         void addImage();
+
         void saveAlarm(Alarm newAlarm);
     }
 
@@ -77,13 +80,13 @@ public class AlarmSettingsFrag extends Fragment implements View.OnClickListener{
         Button saveButton = getView().findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
 
-        if(!alarm.getImageuri().isEmpty()){
+        if (!alarm.getImageuri().isEmpty()) {
             Uri imageuri = Uri.parse(alarm.getImageuri());
             image.setImageURI(imageuri);
         }
 
 
-        if(!alarm.getSounduri().isEmpty()){
+        if (!alarm.getSounduri().isEmpty()) {
             Uri uri = Uri.parse(alarm.getSounduri());
             Ringtone rt = RingtoneManager.getRingtone(getActivity(), uri);
             String title = rt.getTitle(getActivity());
@@ -94,21 +97,29 @@ public class AlarmSettingsFrag extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.image){
-            Log.v("CLICK", "image clicked");
-            mListener.addImage();
-        }else if(v.getId() == R.id.sound){
-            Log.v("CLICK", "sound clicked");
-            mListener.addSound();
-        }else if(v.getId() == R.id.saveButton){
 
-            mListener.saveAlarm(alarm);
+        EditText et = getView().findViewById(R.id.sound);
+        ImageView iv = getView().findViewById(R.id.image);
+
+        if (v.getId() == R.id.image) {
+            mListener.addImage();
+        } else if (v.getId() == R.id.sound) {
+            mListener.addSound();
+        } else if (v.getId() == R.id.saveButton) {
+
+            if (!et.getText().toString().isEmpty() && iv.getDrawable()!=null) {
+                Log.v("CLICK","asf - " + alarm.getImageuri());
+                Log.v("CLICK","asf - " + alarm.getSounduri());
+                mListener.saveAlarm(alarm);
+            } else {
+                AlertDialog.Builder warning = new AlertDialog.Builder(getActivity());
+                warning.setMessage("You must choose an image and sound to continue");
+                warning.setPositiveButton("Okay", null);
+                AlertDialog alert = warning.create();
+                alert.show();
+            }
         }
     }
-
-
-
-
 
 
 }

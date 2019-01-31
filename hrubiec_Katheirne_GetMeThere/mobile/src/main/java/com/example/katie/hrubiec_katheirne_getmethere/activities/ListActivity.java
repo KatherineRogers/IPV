@@ -70,21 +70,12 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
         IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
         Receiver messageReceiver = new Receiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, messageFilter);
-
-        loadFromFirebase();
-
         setList();
     }
 
     public void setList() {
-
-        if (1==1/*readObjectFromCache(getApplicationContext(), READWRITEOBJ) != null*/) {
-            //alarms = (ArrayList<Alarm>) readObjectFromCache(getApplicationContext(), READWRITEOBJ);
-            new NewThread("/my_path", alarms).start();
-        }
         new NewThread("/my_path", alarms).start();
         getFragmentManager().beginTransaction().replace(R.id.frame, ListFrag.newInstance(alarms)).commit();
-        //getFragmentManager().beginTransaction().replace(R.id.frame, SignInFragment.newInstance()).commit();
     }
 
     @Override
@@ -97,71 +88,104 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
     public void addNew() {
         //add new locaiton and alarm
         Intent addIntent = new Intent(this, AddActivity.class);
-        //Intent addIntent = new Intent(this, AlarmSettingsActivity.class);
         startActivityForResult(addIntent, AddActivity.ADDREQUEST);
     }
 
     @Override
     public void deleteAlarm(final int position) {
-        alarms.remove(position);
-        writeObjectInCache(ListActivity.this, READWRITEOBJ, alarms);
-        new NewThread("/my_path", alarms).start();
-        setList();
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String userID = user.getUid();
+
+        DatabaseReference testRef = rootRef.child("users").child(userID);
+        DatabaseReference alarmsRef = testRef.child("alarms");
+
+        ValueEventListener eventListener = new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String alarmName = dataSnapshot.getKey();
+                for (DataSnapshot dh : dataSnapshot.getChildren()) {
+                    Long ident = (Long) dh.child("identifier").getValue();
+                    if (ident == alarms.get(position).getIdentifier()) {
+                        dh.getRef().removeValue();
+                        alarms.clear();
+                        loadFromFirebase();
+                        setList();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        alarmsRef.addListenerForSingleValueEvent(eventListener);
     }
+
 
     @Override
     public void viewAlarm(int position) {
         Intent addIntent = new Intent(this, DetailsActivity.class);
-        addIntent.putExtra("alarm",alarms.get(position));
-        startActivity(addIntent);    }
+        addIntent.putExtra("alarm", alarms.get(position));
+
+
+
+
+
+
+
+        startActivity(addIntent);
+    }
 
     @Override
     public void signOut() {
         mAuth.signOut();
-        Log.v("CLICK","signed out");
         alarms.clear();
         finish();
     }
 
-    public static void saveToFirebase(Alarm newAlarm){
+    public static void saveToFirebase(Alarm newAlarm) {
         String id = user.getUid();
         DatabaseReference userRef = databaseAlarms.child(id);
         String alarmId = databaseAlarms.push().getKey();
         userRef.child("alarms").child(alarmId).setValue(newAlarm);
     }
 
-    public void loadFromFirebase(){
+    public void loadFromFirebase() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         final String userID = user.getUid();
 
         DatabaseReference testRef = rootRef.child("users").child(userID);
-        DatabaseReference alarmsRef = testRef.child("alarms");
+        final DatabaseReference alarmsRef = testRef.child("alarms");
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot dh: dataSnapshot.getChildren()){
-                    //Log.v("CLICK","" + dh.child("arrivalTime"));
-                    if(alarms.isEmpty()) {
-                        Long arrivalTime = (Long) dh.child("arrivalTime").getValue();
-                        Long departTime = (Long) dh.child("departureTime").getValue();
-                        Long dit = (Long) dh.child("durationInTraffic").getValue();
-                        String startLoc = (String) dh.child("startingLoc").getValue();
-                        String endLoc = (String) dh.child("endingLoc").getValue();
-                        Long ident = (Long) dh.child("identifier").getValue();
-                        String img = (String) dh.child("imageurl").getValue();
-                        Long wub = (Long) dh.child("wakeUpBefore").getValue();
-                        String sound = (String) dh.child("soundurl").getValue();
+                for (DataSnapshot dh : dataSnapshot.getChildren()) {
 
-                        alarms.add(new Alarm(departTime, arrivalTime, dit, startLoc, endLoc, wub, ident, img, sound, userID));
+                    Long arrivalTime = (Long) dh.child("arrivalTime").getValue();
+                    Long departTime = (Long) dh.child("departureTime").getValue();
+                    Long dit = (Long) dh.child("durationInTraffic").getValue();
+                    String startLoc = (String) dh.child("startingLoc").getValue();
+                    String endLoc = (String) dh.child("endingLoc").getValue();
+                    Long ident = (Long) dh.child("identifier").getValue();
+                    String img = (String) dh.child("imageuri").getValue();
+                    Long wub = (Long) dh.child("wakeUpBefore").getValue();
+                    String sound = (String) dh.child("sounduri").getValue();
+                    Alarm a = new Alarm(departTime, arrivalTime, dit, startLoc, endLoc, wub, ident, img, sound, userID);
+
+                    if (!alarms.contains(a)) {
+                        alarms.add(a);
                         setList();
-                        Log.v("CLICK", ""+ alarms.size());
                     }
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         };
         alarmsRef.addListenerForSingleValueEvent(eventListener);
     }
@@ -204,6 +228,8 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
     protected void onResume() {
         super.onResume();
         new NewThread("/my_path", alarms).start();
+        alarms.clear();
+        loadFromFirebase();
         setList();
     }
 
@@ -219,8 +245,10 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            loadFromFirebase();
             //do something with the recieved infro from watch aka update ui
             new NewThread("/my_path", alarms).start();
+
             setList();
         }
 
@@ -232,11 +260,7 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
         Message msg = myHandler.obtainMessage();
         msg.setData(bundle);
         myHandler.sendMessage(msg);
-
     }
-
-
-
 
     class NewThread extends Thread {
         String path;
@@ -246,6 +270,7 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
             path = p;
             message = m;
         }
+
         public void run() {
             Task<List<Node>> wearableList =
                     Wearable.getNodeClient(getApplicationContext()).getConnectedNodes();

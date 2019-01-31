@@ -16,11 +16,17 @@ import android.widget.Toast;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.activities.AddActivity;
 import com.example.katie.hrubiec_katheirne_getmethere.activities.GoingOffActivity;
+import com.example.katie.hrubiec_katheirne_getmethere.activities.ListActivity;
 import com.example.katie.hrubiec_katheirne_getmethere.fragments.AlarmFrag;
 import com.example.katie.hrubiec_katheirne_getmethere.helpers.DirectionsHelper;
 import com.example.katie.hrubiec_katheirne_getmethere.helpers.DirectionsParser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +43,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.v("CLICK", "recieved");
         //open frag
         bndl = intent.getBundleExtra("bundle");
 /*        Bundle bundle1 = intent.getBundleExtra("bundle1");
@@ -47,6 +54,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         cntxt = context;
 
         if (bndl != null) {
+            Log.v("CLICK", "bundle not null");
             alarm = (Alarm) bndl.getSerializable("alarm");
             Alarm alarm1 = (Alarm) bndl.getSerializable("time1");
             Alarm alarm2 = (Alarm) bndl.getSerializable("time2");
@@ -60,33 +68,65 @@ public class AlarmReceiver extends BroadcastReceiver {
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    if(user != null && user.getUid().equals(alarm.userID)){
+                    if (user != null && user.getUid().equals(alarm.userID)) {
+                        Log.v("CLICK", "user not null and ids match");
+
                         if (alarm != null) {
-                            intent1 = new Intent();
+                            //need to check if database  still contains the alarm
 
-                            String packageName = cntxt.getPackageName();
-                            String activityName = GoingOffActivity.class.getName();
-                            intent1.setClassName(packageName, activityName);
-                            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent1.putExtra("alarm", alarm);
+                            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                            final String userID = user.getUid();
+
+                            DatabaseReference testRef = rootRef.child("users").child(userID);
+                            final DatabaseReference alarmsRef = testRef.child("alarms");
+                            ValueEventListener eventListener = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    for (DataSnapshot dss : dataSnapshot.getChildren()) {
+
+                                        Long ident = (Long) dss.child("identifier").getValue();
+
+                                        if (alarm.getIdentifier() == ident) {
+                                            Log.v("CLICK", "alarm list contains alarm");
+                                            intent1 = new Intent();
+
+                                            String packageName = cntxt.getPackageName();
+                                            String activityName = GoingOffActivity.class.getName();
+                                            intent1.setClassName(packageName, activityName);
+                                            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            intent1.putExtra("alarm", alarm);
 
 
-                            if (bndl.getSerializable("time1") != null) {
-                                //check time in maps
-                                Log.v("CLICK", "alarm found for before time1");
-                                //run google API traffic check
-                                String start = alarm.getStartingLoc().replace(" ", "");
-                                String end = alarm.getEndingLoc().replace(" ", "");
+                                            if (bndl.getSerializable("time1") != null) {
+                                                //check time in maps
+                                                Log.v("CLICK", "alarm found for before time1");
+                                                //run google API traffic check
+                                                String start = alarm.getStartingLoc().replace(" ", "");
+                                                String end = alarm.getEndingLoc().replace(" ", "");
 
-                                DirectionsHelper dh = new DirectionsHelper();
-                                String url = dh.getRequestUrl(start, end);
-                                TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
-                                taskRequestDirections.execute(url);
+                                                DirectionsHelper dh = new DirectionsHelper();
+                                                String url = dh.getRequestUrl(start, end);
+                                                TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
+                                                taskRequestDirections.execute(url);
 
-                            }else {
-                                Log.v("CLICK", alarm.toString());
-                                cntxt.startActivity(intent1);
-                            }
+                                            } else {
+                                                Log.v("CLICK", "launching alarm");
+                                                Log.v("CLICK", alarm.toString());
+                                                cntxt.startActivity(intent1);
+                                            }
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            };
+                            alarmsRef.addListenerForSingleValueEvent(eventListener);
+
                         }/* else if(alarm1!= null) {
                 Log.v("CLICK", "alarm1 is not null");
             }else if(alarm2!= null) {
@@ -96,24 +136,15 @@ public class AlarmReceiver extends BroadcastReceiver {
             } else if(alarm4!= null) {
                 Log.v("CLICK", "alarm4 is not null");
             }*/
-                    }else{
-                        //user is not signed in
-                        //delete from firebase if so
+                    } else {
                         return;
                     }
                 }
             };
-
             firebaseAuth.addAuthStateListener(authListener);
-
-
-
-
-
         }
 
     }
-
 
 
     public class TaskRequestDirections extends AsyncTask<String, Void, String> {
@@ -153,16 +184,16 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
 
 
-            Log.v("CLICK","duration in traffic: " + durationInTrafficLong);
-            Log.v("CLICK","duration in traffic alarm: " + alarm.getDurationInTraffic());
+            Log.v("CLICK", "duration in traffic: " + durationInTrafficLong);
+            Log.v("CLICK", "duration in traffic alarm: " + alarm.getDurationInTraffic());
 
-            if(alarm.getDurationInTraffic()<durationInTrafficLong || alarm.getDurationInTraffic() == durationInTrafficLong){
-                Log.v("CLICK","alarm duration is less than now duration");
+            if (alarm.getDurationInTraffic() < durationInTrafficLong || alarm.getDurationInTraffic() == durationInTrafficLong) {
+                Log.v("CLICK", "alarm duration is less than now duration");
                 //wake up now
                 //start alarm now
                 cntxt.startActivity(intent1);
-            }else if(alarm.getDurationInTraffic()>durationInTrafficLong){
-                Log.v("CLICK","alarm duration is greater than now duration");
+            } else if (alarm.getDurationInTraffic() > durationInTrafficLong) {
+                Log.v("CLICK", "alarm duration is greater than now duration");
                 //check again in 15 more minutes - do nothing basically
             }
         }

@@ -18,14 +18,16 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.google.android.support:wearable:2.4.0'
     implementation 'com.google.android.gms:play-services-wearable:16.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.android.support:percent:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:wear:27.1.1'
     compileOnly 'com.google.android.wearable:wearable:2.4.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
 
 dependencies {
