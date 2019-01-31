@@ -84,6 +84,7 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
     public void addNew() {
         //add new locaiton and alarm
         Intent addIntent = new Intent(this, AddActivity.class);
+        //Intent addIntent = new Intent(this, AlarmSettingsActivity.class);
         startActivityForResult(addIntent, AddActivity.ADDREQUEST);
     }
 

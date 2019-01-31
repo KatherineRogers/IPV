@@ -68,7 +68,7 @@ public class AddActivity extends AppCompatActivity implements AddFrag.AddAlarmLi
         super.onActivityResult(requestCode, resultCode, data);
         //do something when add is finished or it is deleted
         if(resultCode != RESULT_CANCELED){
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, ListActivity.class);
             setResult(RESULT_OK, intent);
             finish();
         }

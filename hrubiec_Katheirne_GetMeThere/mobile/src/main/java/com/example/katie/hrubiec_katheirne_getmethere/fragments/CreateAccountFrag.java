@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.User;
@@ -36,7 +35,8 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
 
     private EditText etPass;
     private EditText etEmail;
-    private EditText etName;
+    private EditText etFirstName;
+    private EditText etLastName;
     DatabaseReference databaseUsers;
 
     public static CreateAccountFrag newInstance() {
@@ -59,7 +59,9 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
 
         etEmail = getView().findViewById(R.id.email);
         etPass = getView().findViewById(R.id.password);
-        etName = getView().findViewById(R.id.name);
+        etFirstName = getView().findViewById(R.id.firstname);
+        etLastName = getView().findViewById(R.id.lastname);
+
         Button create = getView().findViewById(R.id.createAccount);
         create.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
@@ -84,7 +86,8 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
 
         final String email = etEmail.getText().toString();
         final String password = etPass.getText().toString();
-        final String name = etName.getText().toString();
+        final String firstname = etFirstName.getText().toString();
+        final String lastname = etLastName.getText().toString();
 
         // TODO: Create the user account
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -97,7 +100,7 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
                     String userId = mAuth.getCurrentUser().getUid();
                     Log.v("CLICK","user id:"+userId);
 
-                    User newUser = new User(email,password,name);
+                    User newUser = new User(email,password,firstname, lastname);
                     databaseUsers.child(userId).setValue(newUser);
                 }else{
                     Log.v("CLICK", "account creation failed");

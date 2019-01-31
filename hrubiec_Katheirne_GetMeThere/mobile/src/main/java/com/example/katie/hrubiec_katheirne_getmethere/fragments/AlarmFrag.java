@@ -150,9 +150,9 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
                     showWarning();
                 } else {
                     if(wakeUpCalled==false){
-                        mListener.finishAdd(new Alarm(departureTime, arrivalTimeChosen, durationInTraffic,startingLoc, endingLoc, departureTime, System.currentTimeMillis()));
+                        mListener.finishAdd(new Alarm(departureTime, arrivalTimeChosen, durationInTraffic,startingLoc, endingLoc, departureTime, System.currentTimeMillis(), "",""));
                     }else{
-                        mListener.finishAdd(new Alarm(departureTime, arrivalTimeChosen, durationInTraffic,startingLoc, endingLoc, wakeUpTime,System.currentTimeMillis()));
+                        mListener.finishAdd(new Alarm(departureTime, arrivalTimeChosen, durationInTraffic,startingLoc, endingLoc, wakeUpTime,System.currentTimeMillis(),"",""));
                     }
                 }
                 break;

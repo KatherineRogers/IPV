@@ -34,7 +34,10 @@
         <activity android:name=".activities.GoingOffActivity" />
         <activity android:name=".activities.DetailsActivity" />
         <activity android:name=".activities.ListActivity"/>
+        <activity android:name=".activities.CreateAccountActivity"/>
+        <activity android:name=".activities.AlarmSettingsActivity"/>
         <receiver android:name=".objects.AlarmReceiver" />
+
 
         <meta-data
             android:name="com.google.android.gms.version"

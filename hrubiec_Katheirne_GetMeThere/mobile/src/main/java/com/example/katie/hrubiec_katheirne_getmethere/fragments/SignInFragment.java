@@ -1,6 +1,7 @@
 package com.example.katie.hrubiec_katheirne_getmethere.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.katie.hrubiec_katheirne_getmethere.R;
+import com.example.katie.hrubiec_katheirne_getmethere.activities.CreateAccountActivity;
+import com.example.katie.hrubiec_katheirne_getmethere.activities.ListActivity;
 import com.example.katie.hrubiec_katheirne_getmethere.activities.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -97,7 +100,10 @@ public class SignInFragment extends Fragment implements OnClickListener {
         if (v.getId() == R.id.signInButton) {
             signUserIn();
         } else if (v.getId() == R.id.createAccount) {
-            getFragmentManager().beginTransaction().add(R.id.frame, CreateAccountFrag.newInstance()).commit();
+            //Intent createAccount = new Intent(getActivity(),)
+            //getFragmentManager().beginTransaction().add(R.id.frame, CreateAccountFrag.newInstance()).commit();
+            Intent startList = new Intent(getActivity(), CreateAccountActivity.class);
+            startActivity(startList);
         }
     }
 

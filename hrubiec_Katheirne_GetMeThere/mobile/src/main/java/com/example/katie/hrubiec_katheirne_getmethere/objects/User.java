@@ -4,23 +4,13 @@ public class User {
 
     String email;
     String password;
-    String name;
+    String firstname;
+    String lastname;
 
-    public User(String email, String password, String name) {
+    public User(String email, String password, String firstname, String lastname) {
         this.email = email;
         this.password = password;
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getName() {
-        return name;
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 }

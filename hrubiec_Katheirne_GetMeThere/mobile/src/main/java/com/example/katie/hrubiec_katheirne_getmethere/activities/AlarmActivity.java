@@ -50,7 +50,14 @@ public class AlarmActivity extends AppCompatActivity implements AlarmFrag.Finsih
 
     @Override
     public void finishAdd(Alarm newAlarm) {
-        ListActivity.alarms.add(newAlarm);
+
+        Intent startNext = new Intent(this, AlarmSettingsActivity.class);
+        startNext.putExtra("alarm", newAlarm);
+        startActivityForResult(startNext, 88);
+
+
+
+        /*ListActivity.alarms.add(newAlarm);
         ListActivity.writeObjectInCache(getApplicationContext(), ListActivity.READWRITEOBJ, ListActivity.alarms);
         Intent mainActIntent = new Intent(this, MainActivity.class);
         setResult(RESULT_OK, mainActIntent);
@@ -98,7 +105,18 @@ public class AlarmActivity extends AppCompatActivity implements AlarmFrag.Finsih
             //return
             Log.v("CHECKALARM","alarm not set for 15 before");
         }
-        finish();
+        finish();*/
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //do something when add is finished or it is deleted
+        if(resultCode != RESULT_CANCELED){
+            Intent intent = new Intent(this, ListActivity.class);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
 
