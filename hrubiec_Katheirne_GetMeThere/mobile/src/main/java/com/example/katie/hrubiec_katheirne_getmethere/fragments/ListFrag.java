@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.example.katie.hrubiec_katheirne_getmethere.activities.MainActivity;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
+import com.example.katie.hrubiec_katheirne_getmethere.objects.CustomListAdapter;
 
 import java.util.ArrayList;
 
@@ -85,9 +86,8 @@ public class ListFrag extends ListFragment {
                     return true;
                 }
             });
-            ArrayAdapter<Alarm> adapter = new ArrayAdapter<Alarm>(
-                    getActivity(), android.R.layout.simple_list_item_1, alarms
-            );
+
+            CustomListAdapter adapter = new CustomListAdapter(getActivity(), alarms);
             setListAdapter(adapter);
         }
 

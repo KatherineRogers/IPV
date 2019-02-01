@@ -57,7 +57,7 @@ public class GoingOffActivity extends AppCompatActivity implements GoingOffFragm
                 // Do something after 5m
                 startActivity(intent);
             }
-        }, 5000);
+        }, 300000);
         finish();
     }
 }

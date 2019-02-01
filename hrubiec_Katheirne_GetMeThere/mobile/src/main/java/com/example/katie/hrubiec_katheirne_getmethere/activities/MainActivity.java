@@ -34,11 +34,9 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    Log.v("CLICK", "user is signed in " + user.getUid());
                     Intent startList = new Intent(MainActivity.this, ListActivity.class);
                     startActivity(startList);
                 } else {
-                    Log.v("CLICK", "currently signed out");
                     getFragmentManager().beginTransaction().replace(R.id.frame, SignInFragment.newInstance()).commitAllowingStateLoss();
                 }
             }

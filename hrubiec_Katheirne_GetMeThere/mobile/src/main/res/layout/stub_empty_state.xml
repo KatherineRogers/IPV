@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="No Items to Show. Please add a new item to get started."
+        android:text="@string/no_alarms_set_please_add_a_new_alarm_to_get_started"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 </LinearLayout>

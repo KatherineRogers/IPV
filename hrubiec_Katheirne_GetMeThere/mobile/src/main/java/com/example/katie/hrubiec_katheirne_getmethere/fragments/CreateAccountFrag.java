@@ -103,7 +103,7 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
                     User newUser = new User(email,password,firstname, lastname);
                     databaseUsers.child(userId).setValue(newUser);
                 }else{
-                    Log.v("CLICK", "account creation failed");
+                    Log.e(TAG, "account creation failed");
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

@@ -3,6 +3,7 @@ package com.example.katie.hrubiec_katheirne_getmethere.objects;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 
 public class Alarm implements Serializable {
 
@@ -35,6 +36,10 @@ public class Alarm implements Serializable {
     public String toString() {
         return startingLoc + " - " + endingLoc;
     }
+
+    public String getStringDepart(){
+        return new SimpleDateFormat("MMM d, yyyy, h:mm a").format(getDepartureTime());
+    };
 
     public long getDepartureTime() {
         return departureTime;

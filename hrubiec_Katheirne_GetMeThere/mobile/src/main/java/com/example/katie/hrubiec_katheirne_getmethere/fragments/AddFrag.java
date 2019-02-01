@@ -142,10 +142,15 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
 
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            //map.setMyLocationEnabled(true);
-            //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
-            //Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            //centreMapOnLocation(lastKnownLocation,"Your Location");
+            map.setMyLocationEnabled(true);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(lastKnownLocation == null){
+                lastKnownLocation = new Location("");
+                lastKnownLocation.setLatitude(42.360171);
+                lastKnownLocation.setLongitude(-71.059229);
+            }
+            centreMapOnLocation(lastKnownLocation,"Your Location");
         } else if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
@@ -157,7 +162,7 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
         LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
         map.clear();
         map.addMarker(new MarkerOptions().position(userLocation).title(title));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,12));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,25));
 
     }
 

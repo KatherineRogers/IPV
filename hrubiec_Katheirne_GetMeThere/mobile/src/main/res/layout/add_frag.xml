@@ -2,14 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/address1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Starting Address"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/startingAdd"
@@ -24,7 +27,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ending Address"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/endingAdd"
@@ -38,7 +42,10 @@
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search" />
+        android:layout_marginBottom="8dp"
+        android:background="@color/blue"
+        android:text="Search"
+        android:textColor="@android:color/background_light" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"

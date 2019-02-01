@@ -7,11 +7,18 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:src="@drawable/logogmt" />
+
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:fontFamily="sans-serif"
+        android:hint="@string/email"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -19,20 +26,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/password"
         android:inputType="textPassword" />
 
     <Button
         android:id="@+id/signInButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign In" />
+        android:background="@color/blue"
+        android:text="@string/log_in"
+        android:textColor="@android:color/background_light" />
 
     <TextView
         android:id="@+id/createAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:text="Create Account"
+        android:text="@string/sign_up"
         android:textAlignment="center"
+        android:textColor="@color/blue"
         android:textStyle="bold" />
 </LinearLayout>

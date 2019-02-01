@@ -10,5 +10,10 @@
     <string name="starting_empty">Starting address cannot be empty</string>
     <string name="permission_denied_loc">Application will not function without enabling locaiton. Please allow application to access your locaiton.\"</string>
     <string name="permission_denied_storage">Application will not function without enabling storage. Please allow application to access your storage.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log In</string>
+    <string name="no_alarms_set_please_add_a_new_alarm_to_get_started">No alarms set. Please add a new alarm to get started.</string>
 
 </resources>

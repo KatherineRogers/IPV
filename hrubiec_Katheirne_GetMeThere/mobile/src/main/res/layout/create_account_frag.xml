@@ -7,20 +7,28 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:src="@drawable/logogmt" />
+
     <EditText
         android:id="@+id/firstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="First Name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:padding="16dp" />
+
     <EditText
         android:id="@+id/lastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Last Name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:padding="16dp" />
 
     <EditText
         android:id="@+id/email"
@@ -28,7 +36,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:padding="16dp" />
 
     <EditText
         android:id="@+id/password"
@@ -36,11 +45,15 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:padding="16dp" />
 
     <Button
         android:id="@+id/createAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create Account" />
+        android:background="@color/blue"
+        android:padding="16dp"
+        android:text="Sign Up"
+        android:textColor="@android:color/background_light" />
 </LinearLayout>

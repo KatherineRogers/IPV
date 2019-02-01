@@ -79,7 +79,7 @@ public class AlarmSettingsFrag extends Fragment implements View.OnClickListener 
         }
 
         TextView setFor = getView().findViewById(R.id.setForText);
-        setFor.setText(alarm.toString());
+        setFor.setText(alarm.getStringDepart());
 
         EditText sound = getView().findViewById(R.id.sound);
         sound.setOnClickListener(this);
@@ -90,7 +90,10 @@ public class AlarmSettingsFrag extends Fragment implements View.OnClickListener 
         Button saveButton = getView().findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
 
+        TextView imageText = getView().findViewById(R.id.addImageText);
+
         if (!alarm.getImageuri().isEmpty()) {
+            imageText.setVisibility(View.GONE);
             Uri imageuri = Uri.parse(alarm.getImageuri());
             image.setImageURI(imageuri);
         }

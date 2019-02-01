@@ -122,9 +122,9 @@ public class SignInFragment extends Fragment implements OnClickListener {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Log.v("CLICK", "signed in");
+
                 } else {
-                    Log.v("CLICK", "sign in failed");
+                    Log.e(TAG, "sign in failed");
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
