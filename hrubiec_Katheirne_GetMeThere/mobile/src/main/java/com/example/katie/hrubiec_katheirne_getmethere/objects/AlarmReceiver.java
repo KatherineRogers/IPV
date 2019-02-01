@@ -69,7 +69,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if (user != null && user.getUid().equals(alarm.userID)) {
-                        Log.v("CLICK", "user not null and ids match");
 
                         if (alarm != null) {
                             //need to check if database  still contains the alarm
@@ -88,7 +87,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                                         Long ident = (Long) dss.child("identifier").getValue();
 
                                         if (alarm.getIdentifier() == ident) {
-                                            Log.v("CLICK", "alarm list contains alarm");
                                             intent1 = new Intent();
 
                                             String packageName = cntxt.getPackageName();
@@ -96,11 +94,8 @@ public class AlarmReceiver extends BroadcastReceiver {
                                             intent1.setClassName(packageName, activityName);
                                             intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             intent1.putExtra("alarm", alarm);
-
-
                                             if (bndl.getSerializable("time1") != null) {
                                                 //check time in maps
-                                                Log.v("CLICK", "alarm found for before time1");
                                                 //run google API traffic check
                                                 String start = alarm.getStartingLoc().replace(" ", "");
                                                 String end = alarm.getEndingLoc().replace(" ", "");
@@ -111,8 +106,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                                                 taskRequestDirections.execute(url);
 
                                             } else {
-                                                Log.v("CLICK", "launching alarm");
-                                                Log.v("CLICK", alarm.toString());
                                                 cntxt.startActivity(intent1);
                                             }
                                         } else {
@@ -183,17 +176,11 @@ public class AlarmReceiver extends BroadcastReceiver {
                 }
             }
 
-
-            Log.v("CLICK", "duration in traffic: " + durationInTrafficLong);
-            Log.v("CLICK", "duration in traffic alarm: " + alarm.getDurationInTraffic());
-
             if (alarm.getDurationInTraffic() < durationInTrafficLong || alarm.getDurationInTraffic() == durationInTrafficLong) {
-                Log.v("CLICK", "alarm duration is less than now duration");
                 //wake up now
                 //start alarm now
                 cntxt.startActivity(intent1);
             } else if (alarm.getDurationInTraffic() > durationInTrafficLong) {
-                Log.v("CLICK", "alarm duration is greater than now duration");
                 //check again in 15 more minutes - do nothing basically
             }
         }

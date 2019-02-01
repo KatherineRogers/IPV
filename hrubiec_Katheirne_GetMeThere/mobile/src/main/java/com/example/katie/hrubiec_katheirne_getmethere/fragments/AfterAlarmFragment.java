@@ -55,7 +55,12 @@ public class AfterAlarmFragment extends Fragment implements View.OnClickListener
             startActivity(intent);
             //finish();
         }else if(v.getId() == R.id.share){
-
+            //
+            String shareBody = "Just woke up! Ready for my commute from " + alarmGoingOff.getStartingLoc() + " to " + alarmGoingOff.getEndingLoc();
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
         }
     }
 }

@@ -1,16 +1,28 @@
 package com.example.katie.hrubiec_katheirne_getmethere.activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -27,11 +39,20 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
     private final int SELECT_PICTURE = 32;
     Alarm alarm;
 
+    public void requestPermission(){
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+        } else if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        requestPermission();
         alarm = (Alarm) getIntent().getSerializableExtra("alarm");
         if(alarm != null){
             loadFrag();
@@ -42,6 +63,8 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
         getFragmentManager().beginTransaction().replace(R.id.frame, AlarmSettingsFrag.newInstance(alarm)).commitAllowingStateLoss();
 
     }
+
+
 
     @Override
     public void addSound() {
@@ -54,9 +77,10 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
 
     @Override
     public void addImage() {
-        Intent intent = new Intent();
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
     }
 
@@ -64,12 +88,7 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
     public void saveAlarm(Alarm newAlarm) {
 
         //save alarm to list, firebase database, set alarms
-
-        Log.v("CLICK","asa - " + alarm.getImageuri());
-        Log.v("CLICK","asa - " + alarm.getSounduri());
-        //ListActivity.alarms.add(newAlarm);
         ListActivity.saveToFirebase(newAlarm);
-        //ListActivity.writeObjectInCache(getApplicationContext(), ListActivity.READWRITEOBJ, ListActivity.alarms);
         Intent mainActIntent = new Intent(this, ListActivity.class);
         setResult(RESULT_OK, mainActIntent);
 
@@ -131,9 +150,6 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
 
             if (uri != null) {
                 this.chosenRingtone = uri.toString();
-                Log.v("CLICK", "name for sound: " + title);
-                Log.v("CLICK", "uri for sound: " + chosenRingtone);
-
                 alarm.setSounduri(chosenRingtone);
                 loadFrag();
             } else {
@@ -144,10 +160,7 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
             if (imageUri != null) {
 
                 this.chosenImage = imageUri.toString();
-                Log.v("CLICK", "uri for image: " + imageUri);
                 alarm.setImageuri(chosenImage);
-                Log.v("CLICK", "uri for image: " + alarm.getImageuri());
-
                 loadFrag();
             } else {
                 this.chosenImage = null;
@@ -155,5 +168,73 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
         }
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        boolean allPermissionsGranted = true;
+
+        for (int grantResult : grantResults) {
+            if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                allPermissionsGranted = false;
+                break;
+            }
+        }
+
+        if (!allPermissionsGranted) {
+            boolean somePermissionsForeverDenied = false;
+            for (String permission : permissions) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                    //denied
+                    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                    alertDialogBuilder.setTitle("Permissions Required").setMessage(R.string.permission_denied_storage)
+                            .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //send again
+                                    requestPermission();
+                                }
+                            }).setCancelable(false)
+                            .create()
+                            .show();
+                    ;
+                } else {
+                    if (ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+                        //allowed
+                        Log.v("PERMISSIONS", "allowed" + permission);
+                    } else {
+                        //set to never ask again
+                        Log.v("PERMISSIONS", "never ask again" + permission);
+                        somePermissionsForeverDenied = true;
+                    }
+                }
+            }
+            if (somePermissionsForeverDenied) {
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("Permissions Required")
+                        .setMessage("You have forcefully denied some of the required permissions " +
+                                "for this action. Please open settings, go to permissions and allow them.")
+                        .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                        Uri.fromParts("package", getPackageName(), null));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                                System.exit(0);
+                            }
+                        })
+                        .setCancelable(false)
+                        .create()
+                        .show();
+            }
+        } else {
+            switch (requestCode) {
+                //act according to the request code used while requesting the permission(s).
+            }
+        }
+    }
 
 }

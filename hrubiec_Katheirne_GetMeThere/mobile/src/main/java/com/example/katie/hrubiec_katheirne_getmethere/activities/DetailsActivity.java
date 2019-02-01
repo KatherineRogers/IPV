@@ -1,12 +1,16 @@
 package com.example.katie.hrubiec_katheirne_getmethere.activities;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -56,12 +60,13 @@ public class DetailsActivity extends AppCompatActivity{
         /*IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
         Receiver messageReceiver = new Receiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, messageFilter);
+
+
 */
         alarm = (Alarm) getIntent().getSerializableExtra("alarm");
         getFragmentManager().beginTransaction().add(R.id.frame, DetailsFrag.newInstance(alarm)).commit();
 
     }
-
 
 
 

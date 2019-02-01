@@ -8,5 +8,7 @@
     <string name="enter_valid">Please enter a valid address</string>
     <string name="ending_empty">Ending address cannot be empty</string>
     <string name="starting_empty">Starting address cannot be empty</string>
-    <string name="permission_denied_loc">\"Application will not function without enabling locaiton. Please allow application to access your locaiton.\"</string>
+    <string name="permission_denied_loc">Application will not function without enabling locaiton. Please allow application to access your locaiton.\"</string>
+    <string name="permission_denied_storage">Application will not function without enabling storage. Please allow application to access your storage.</string>
+
 </resources>

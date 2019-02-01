@@ -1,15 +1,23 @@
 package com.example.katie.hrubiec_katheirne_getmethere.fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.storage.StorageManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +35,8 @@ public class AlarmSettingsFrag extends Fragment implements View.OnClickListener 
     AddDetailItemListener mListener;
     private static final String ARG_ALARM = "ARG_ALARM";
     Alarm alarm;
+
+
 
     public static AlarmSettingsFrag newInstance(Alarm alarm) {
 
@@ -108,8 +118,6 @@ public class AlarmSettingsFrag extends Fragment implements View.OnClickListener 
         } else if (v.getId() == R.id.saveButton) {
 
             if (!et.getText().toString().isEmpty() && iv.getDrawable()!=null) {
-                Log.v("CLICK","asf - " + alarm.getImageuri());
-                Log.v("CLICK","asf - " + alarm.getSounduri());
                 mListener.saveAlarm(alarm);
             } else {
                 AlertDialog.Builder warning = new AlertDialog.Builder(getActivity());

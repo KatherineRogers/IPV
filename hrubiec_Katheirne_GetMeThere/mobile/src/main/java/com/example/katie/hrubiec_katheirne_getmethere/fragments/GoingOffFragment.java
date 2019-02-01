@@ -1,6 +1,7 @@
 package com.example.katie.hrubiec_katheirne_getmethere.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -36,6 +37,7 @@ public class GoingOffFragment extends Fragment {
     Alarm alarmGoingOFf;
     Ringtone ringtone;
     MediaPlayer mediaPlayer;
+    SnoozeListener mListener;
 
     public static GoingOffFragment newInstance() {
 
@@ -49,6 +51,20 @@ public class GoingOffFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.alarm_goinng_off, container, false);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof SnoozeListener) {
+            mListener = (SnoozeListener) context;
+        } else {
+            throw new IllegalArgumentException("Context is not of kind FinsihAddListener");
+        }
+    }
+
+    public interface SnoozeListener {
+        void snooze(Alarm snoozeAlarm);
     }
 
     @Override
@@ -82,8 +98,9 @@ public class GoingOffFragment extends Fragment {
             snooze.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    mediaPlayer.stop();
                     //snooze alarm
+                    mListener.snooze(alarmGoingOFf);
                 }
             });
         } else {
