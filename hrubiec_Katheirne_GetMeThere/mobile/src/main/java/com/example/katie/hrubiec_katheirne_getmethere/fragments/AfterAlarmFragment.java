@@ -14,10 +14,12 @@ import android.widget.ImageView;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 
+import java.util.Objects;
+
 public class AfterAlarmFragment extends Fragment implements View.OnClickListener{
 
     private static final String ARG_ALARM = "ARG_ALARM";
-    Alarm alarmGoingOff;
+    private Alarm alarmGoingOff;
 
     public static AfterAlarmFragment newInstance(Alarm alarm) {
 
@@ -38,7 +40,7 @@ public class AfterAlarmFragment extends Fragment implements View.OnClickListener
         super.onActivityCreated(savedInstanceState);
 
         alarmGoingOff = (Alarm) getArguments().getSerializable(ARG_ALARM);
-        Button nav = getView().findViewById(R.id.startNav);
+        Button nav = Objects.requireNonNull(getView()).findViewById(R.id.startNav);
         nav.setOnClickListener(this);
         Button share = getView().findViewById(R.id.share);
         share.setOnClickListener(this);

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.fragments.CreateAccountFrag;
-import com.example.katie.hrubiec_katheirne_getmethere.fragments.SignInFragment;
 
 public class CreateAccountActivity extends AppCompatActivity {
 

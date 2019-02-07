@@ -2,7 +2,6 @@ package com.example.katie.hrubiec_katheirne_getmethere.fragments;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -17,12 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.katie.hrubiec_katheirne_getmethere.activities.DetailsActivity;
-import com.example.katie.hrubiec_katheirne_getmethere.activities.MainActivity;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 
-import java.io.Serializable;
+import java.util.Objects;
 
 //wear
 
@@ -47,8 +44,8 @@ public class DetailsFrag extends Fragment implements View.OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Alarm alarm = (Alarm) getArguments().getSerializable(ARG_ALARM);
-        TextView tv = getView().findViewById(R.id.alarmName);
-        tv.setText(alarm.toString());
+        TextView tv = Objects.requireNonNull(getView()).findViewById(R.id.alarmName);
+        tv.setText(Objects.requireNonNull(alarm).toString());
         Button btn = getView().findViewById(R.id.toMaps);
         btn.setOnClickListener(this);
     }
@@ -59,7 +56,7 @@ public class DetailsFrag extends Fragment implements View.OnClickListener{
 
         if(v.getId() == R.id.toMaps){
             boolean isAppDisabled = isGoogleMapsInstalled();
-            if(isAppDisabled == false){
+            if(!isAppDisabled){
                 AlertDialog.Builder warning = new AlertDialog.Builder(getActivity());
                 warning.setMessage("You must download Google Maps to continue");
                 warning.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
@@ -72,7 +69,7 @@ public class DetailsFrag extends Fragment implements View.OnClickListener{
                 alert.show();
             }else{
                 Alarm alarm = (Alarm) getArguments().getSerializable(ARG_ALARM);
-                String uri = "http://maps.google.com/maps?f=d&hl=en&saddr=" + alarm.getStartingLoc() + "&daddr=" + alarm.getEndingLoc();
+                String uri = "http://maps.google.com/maps?f=d&hl=en&saddr=" + Objects.requireNonNull(alarm).getStartingLoc() + "&daddr=" + alarm.getEndingLoc();
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
                 startActivity(intent);
             }
@@ -80,7 +77,7 @@ public class DetailsFrag extends Fragment implements View.OnClickListener{
     }
 
 
-    public void sendToPlayStore(){
+    private void sendToPlayStore(){
         final String appPackageName = "com.google.android.apps.maps";
         try {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
@@ -89,7 +86,7 @@ public class DetailsFrag extends Fragment implements View.OnClickListener{
         }
     }
 
-    public boolean isGoogleMapsInstalled()
+    private boolean isGoogleMapsInstalled()
     {
         try
         {

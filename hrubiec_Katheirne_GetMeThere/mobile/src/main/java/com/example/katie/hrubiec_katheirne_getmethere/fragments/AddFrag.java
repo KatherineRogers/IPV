@@ -1,22 +1,14 @@
 package com.example.katie.hrubiec_katheirne_getmethere.fragments;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -28,7 +20,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.katie.hrubiec_katheirne_getmethere.helpers.DirectionsHelper;
@@ -36,7 +27,6 @@ import com.example.katie.hrubiec_katheirne_getmethere.helpers.DirectionsParser;
 import com.example.katie.hrubiec_katheirne_getmethere.helpers.PolylineParser;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.activities.AddActivity;
-import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -55,19 +45,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClickListener{
 
-    MapView mapView;
-    public GoogleMap map;
-    AddAlarmListener mListener;
-    JSONObject jobj;
-    ArrayList<Marker> markers = new ArrayList<>();
-    String startingLoc;
-    String endingLoc;
-    LocationManager locationManager;
-    LocationListener locationListener;
-    LatLng userLocation;
+    private MapView mapView;
+    private GoogleMap map;
+    private AddAlarmListener mListener;
+    // --Commented out by Inspection (2/6/19, 11:13 PM):JSONObject jobj;
+    private final ArrayList<Marker> markers = new ArrayList<>();
+    private String startingLoc;
+    private String endingLoc;
+    // --Commented out by Inspection (2/6/19, 11:13 PM):LatLng userLocation;
 
     public static AddFrag newInstance() {
 
@@ -96,7 +85,7 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.add_frag, container, false);
-        mapView = (MapView) v.findViewById(R.id.mapView);
+        mapView = v.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
         return v;
@@ -105,7 +94,7 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button btn = getView().findViewById(R.id.search);
+        Button btn = Objects.requireNonNull(getView()).findViewById(R.id.search);
         btn.setOnClickListener(this);
 
     }
@@ -126,49 +115,55 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
         requestPermission();
     }
 
-    public void requestPermission(){
-        locationManager  = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
+    private void requestPermission(){
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
             @Override
-            public void onLocationChanged(Location location) {}
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-            @Override
-            public void onProviderEnabled(String provider) {}
+            public void onLocationChanged(Location location) {
+            }
 
             @Override
-            public void onProviderDisabled(String provider) {}
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+            }
         };
 
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             map.setMyLocationEnabled(true);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, locationListener);
             Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if(lastKnownLocation == null){
                 lastKnownLocation = new Location("");
                 lastKnownLocation.setLatitude(42.360171);
                 lastKnownLocation.setLongitude(-71.059229);
             }
-            centreMapOnLocation(lastKnownLocation,"Your Location");
+            centreMapOnLocation(lastKnownLocation);
         } else if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
     }
 
 
-    public void centreMapOnLocation(Location location, String title){
+    private void centreMapOnLocation(Location location){
 
         LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
         map.clear();
-        map.addMarker(new MarkerOptions().position(userLocation).title(title));
+        map.addMarker(new MarkerOptions().position(userLocation).title("Your Location"));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,25));
 
     }
 
     @Override
     public void onClick(View v) {
-        EditText starting = getView().findViewById(R.id.startingAdd);
+        EditText starting = Objects.requireNonNull(getView()).findViewById(R.id.startingAdd);
         EditText ending = getView().findViewById(R.id.endingAdd);
         if(starting.getText().toString().trim().equals("")){
             Toast.makeText(getActivity(), R.string.starting_empty, Toast.LENGTH_SHORT).show();
@@ -205,7 +200,7 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
                         imm = (InputMethodManager) getContext()
                                 .getSystemService(Context.INPUT_METHOD_SERVICE);
                     }
-                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    Objects.requireNonNull(imm).hideSoftInputFromWindow(getView().getWindowToken(), 0);
 
                     requesturl(startFinal,endFinal);
 
@@ -218,7 +213,7 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        EditText starting = getView().findViewById(R.id.startingAdd);
+        EditText starting = Objects.requireNonNull(getView()).findViewById(R.id.startingAdd);
         EditText ending = getView().findViewById(R.id.endingAdd);
 
         if(item.getTitle().toString().equals("Edit")){
@@ -269,14 +264,14 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
         mapView.onLowMemory();
     }
 
-    public void requesturl(String start, String end) {
+    private void requesturl(String start, String end) {
         DirectionsHelper dh = new DirectionsHelper();
         String url = dh.getRequestUrl(start, end);
         TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
         taskRequestDirections.execute(url);
     }
 
-    public class TaskRequestDirections extends AsyncTask<String, Void,String> {
+    class TaskRequestDirections extends AsyncTask<String, Void,String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -295,7 +290,7 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
         }
     }
 
-    public class TaskParser extends AsyncTask<String,Void,List<List<HashMap<String, String>>>>{
+    class TaskParser extends AsyncTask<String,Void,List<List<HashMap<String, String>>>>{
 
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
@@ -327,7 +322,7 @@ public class AddFrag extends Fragment implements OnMapReadyCallback, View.OnClic
 
             if(polylineOptions!=null){
                 //add to map
-                EditText starting = getView().findViewById(R.id.startingAdd);
+                EditText starting = Objects.requireNonNull(getView()).findViewById(R.id.startingAdd);
                 EditText ending = getView().findViewById(R.id.endingAdd);
                 DirectionsHelper dh = new DirectionsHelper();
                 LatLng start = dh.getLocationFromAddress(getActivity(), starting.getText().toString().trim());

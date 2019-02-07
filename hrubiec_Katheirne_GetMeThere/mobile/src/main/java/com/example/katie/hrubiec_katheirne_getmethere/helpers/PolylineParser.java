@@ -15,7 +15,7 @@ public class PolylineParser {
 
     public List<List<HashMap<String, String>>> parse(JSONObject jObject) {
 
-        List<List<HashMap<String, String>>> routes = new ArrayList<List<HashMap<String, String>>>();
+        List<List<HashMap<String, String>>> routes = new ArrayList<>();
         JSONArray jRoutes = null;
         JSONArray jLegs = null;
         JSONArray jSteps = null;
@@ -41,7 +41,7 @@ public class PolylineParser {
 
                         //Loop for all points
                         for (int l = 0; l < list.size(); l++) {
-                            HashMap<String, String> hm = new HashMap<String, String>();
+                            HashMap<String, String> hm = new HashMap<>();
                             hm.put("lat", Double.toString(((LatLng) list.get(l)).latitude));
                             hm.put("lon", Double.toString(((LatLng) list.get(l)).longitude));
                             path.add(hm);

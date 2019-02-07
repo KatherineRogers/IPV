@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 
 import com.example.katie.hrubiec_katheirne_getmethere.fragments.SignInFragment;
@@ -16,20 +15,18 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG = "FB_SIGNIN";
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private EditText etPass;
-    private EditText etEmail;
+    // --Commented out by Inspection (2/6/19, 11:13 PM):private final String TAG = "FB_SIGNIN";
+    // --Commented out by Inspection (2/6/19, 11:13 PM):private EditText etPass;
+    // --Commented out by Inspection (2/6/19, 11:13 PM):private EditText etEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();

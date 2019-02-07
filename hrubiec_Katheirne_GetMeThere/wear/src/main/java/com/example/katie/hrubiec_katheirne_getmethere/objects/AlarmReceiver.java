@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.katie.hrubiec_katheirne_getmethere.activities.GoingOffActivity;
 
@@ -27,15 +26,15 @@ public class AlarmReceiver  extends BroadcastReceiver {
 
                 if (bundle.getSerializable("time") != null) {
                     //check time in maps
-                    Log.v("CHECKALARM", "alarm found for before time");
+                    //Log.v("CHECKALARM", "alarm found for before time");
                     //run google API traffic check
                     //context.startActivity(intent1);
                 } else {
-                    Log.v("CHECKALARM", alarm.toString());
+                    //Log.v("CHECKALARM", alarm.toString());
                     context.startActivity(intent1);
                 }
             } else {
-                Log.v("CHECKALARM", "alarm is null");
+                //Log.v("CHECKALARM", "alarm is null");
             }
 
 

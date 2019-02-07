@@ -13,12 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.activities.CreateAccountActivity;
-import com.example.katie.hrubiec_katheirne_getmethere.activities.ListActivity;
-import com.example.katie.hrubiec_katheirne_getmethere.activities.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -28,11 +25,12 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 public class SignInFragment extends Fragment implements OnClickListener {
 
     private final String TAG = "FB_SIGNIN";
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private EditText etPass;
     private EditText etEmail;
 
@@ -53,7 +51,7 @@ public class SignInFragment extends Fragment implements OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button signInB = getView().findViewById(R.id.signInButton);
+        Button signInB = Objects.requireNonNull(getView()).findViewById(R.id.signInButton);
         TextView newAccount = getView().findViewById(R.id.createAccount);
         signInB.setOnClickListener(this);
         newAccount.setOnClickListener(this);
@@ -61,7 +59,7 @@ public class SignInFragment extends Fragment implements OnClickListener {
         etPass = getView().findViewById(R.id.password);
         mAuth = FirebaseAuth.getInstance();
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();

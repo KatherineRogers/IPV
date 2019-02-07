@@ -3,15 +3,12 @@ package com.example.katie.hrubiec_katheirne_getmethere.fragments;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +18,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.example.katie.hrubiec_katheirne_getmethere.activities.AddActivity;
-import com.example.katie.hrubiec_katheirne_getmethere.activities.MainActivity;
 import com.example.katie.hrubiec_katheirne_getmethere.helpers.DirectionsHelper;
 import com.example.katie.hrubiec_katheirne_getmethere.helpers.DirectionsParser;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
@@ -41,7 +35,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,28 +45,29 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class AlarmFrag extends DialogFragment implements View.OnClickListener, OnMapReadyCallback {
 
     private static final String ARG_URL = "ARG_URL";
-    String averageTimeText = "";
-    FinsihAddListener mListener;
+    private String averageTimeText = "";
+    private FinsihAddListener mListener;
 
-    long durationInTraffic = 0;
-    long arrivalTimeChosen = 0;
-    long departureTime = 0;
-    String startingLoc;
-    String endingLoc;
-    boolean wakeUpCalled = false;
-    MapView mapView;
-    public GoogleMap map;
+    private long durationInTraffic = 0;
+    private long arrivalTimeChosen = 0;
+    private long departureTime = 0;
+    private String startingLoc;
+    private String endingLoc;
+    private boolean wakeUpCalled = false;
+    private MapView mapView;
+    private GoogleMap map;
 
-    String url = "";
-    Calendar calendar = Calendar.getInstance();
-    Boolean first = true;
-    long wakeUpTime = 0;
+    private String url = "";
+    private Calendar calendar = Calendar.getInstance();
+    private Boolean first = true;
+    private long wakeUpTime = 0;
 
-    ArrayList<Marker> markers = new ArrayList<>();
+    private final ArrayList<Marker> markers = new ArrayList<>();
 
     //need map and to set polyline from link url var
 
@@ -103,7 +97,7 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.alarm_add_frag, container, false);
-        mapView = (MapView) v.findViewById(R.id.mapView2);
+        mapView = v.findViewById(R.id.mapView2);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
         return v;
@@ -126,7 +120,7 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
             AlarmFrag.TaskRequestDirections taskRequestDirections = new AlarmFrag.TaskRequestDirections();
             taskRequestDirections.execute(url);
         }
-        EditText arrivalPicker = getView().findViewById(R.id.arrivalTime);
+        EditText arrivalPicker = Objects.requireNonNull(getView()).findViewById(R.id.arrivalTime);
         EditText wakeUpPicker = getView().findViewById(R.id.wakeUp);
         Button setAlarmButton = getView().findViewById(R.id.addAlarm);
         arrivalPicker.setOnClickListener(this);
@@ -152,8 +146,8 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
                     showWarning();
                 } else {
                     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                    String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    if(wakeUpCalled==false){
+                    String userID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                    if(!wakeUpCalled){
                         mListener.finishAdd(new Alarm(departureTime, arrivalTimeChosen, durationInTraffic,startingLoc, endingLoc, departureTime, System.currentTimeMillis(), "","", userID));
                     }else{
                         mListener.finishAdd(new Alarm(departureTime, arrivalTimeChosen, durationInTraffic,startingLoc, endingLoc, wakeUpTime,System.currentTimeMillis(),"","",userID));
@@ -165,7 +159,7 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
         }
     }
 
-    public void showWarning() {
+    private void showWarning() {
         AlertDialog.Builder warning = new AlertDialog.Builder(getActivity());
         warning.setMessage("Minimum departure time cannot be in the past. Please readjust arrival time or wake up time.");
         warning.setPositiveButton("Okay", null);
@@ -173,25 +167,25 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
         alert.show();
     }
 
-    public void wakeUpPicker() {
+    private void wakeUpPicker() {
         wakeUpCalled = true;
         final AlertDialog.Builder d = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             inflater = this.getLayoutInflater();
         }
-        View dialogView = inflater.inflate(R.layout.wake_up_picker, null);
+        View dialogView = Objects.requireNonNull(inflater).inflate(R.layout.wake_up_picker, null);
         d.setTitle("Time to Get Ready");
         d.setMessage(R.string.pick_wakeup);
         d.setView(dialogView);
-        final NumberPicker numberPicker = (NumberPicker) dialogView.findViewById(R.id.numberPicker);
+        final NumberPicker numberPicker = dialogView.findViewById(R.id.numberPicker);
         numberPicker.setMaxValue(300);
         numberPicker.setMinValue(0);
         numberPicker.setWrapSelectorWheel(false);
         d.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                EditText wakeUp = getView().findViewById(R.id.wakeUp);
+                EditText wakeUp = Objects.requireNonNull(getView()).findViewById(R.id.wakeUp);
                 long minutes = numberPicker.getValue() * 60000;
                 if (departureTime + durationInTraffic < System.currentTimeMillis() + durationInTraffic) {
                     showWarning();
@@ -205,7 +199,7 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
         alertDialog.show();
     }
 
-    public void dateTimePicker() {
+    private void dateTimePicker() {
         Calendar c = Calendar.getInstance();
         int syear = c.get(Calendar.YEAR);
         int smonth = c.get(Calendar.MONTH);
@@ -252,9 +246,9 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
         datePickerDialog.show();
     }
 
-    public void getMinDepart() {
+    private void getMinDepart() {
         //add method to update ever minute clock tick
-        TextView minDepart = getView().findViewById(R.id.depart);
+        TextView minDepart = Objects.requireNonNull(getView()).findViewById(R.id.depart);
         EditText arrivalTime = getView().findViewById(R.id.arrivalTime);
 
         departureTime = calendar.getTimeInMillis() + 120000;
@@ -290,7 +284,7 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
     }
 
 
-    public class TaskRequestDirections extends AsyncTask<String, Void, String> {
+    class TaskRequestDirections extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -321,7 +315,7 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
                 e.printStackTrace();
             }
 
-            TextView eta = getView().findViewById(R.id.travelTime);
+            TextView eta = Objects.requireNonNull(getView()).findViewById(R.id.travelTime);
             eta.setText(averageTimeText);
 
             if (first) {
@@ -344,7 +338,7 @@ public class AlarmFrag extends DialogFragment implements View.OnClickListener, O
         }
     }
 
-    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
+    class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
 
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings) {

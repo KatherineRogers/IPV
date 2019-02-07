@@ -3,23 +3,16 @@ package com.example.katie.hrubiec_katheirne_getmethere.helpers;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.os.AsyncTask;
-import android.util.Log;
 
-import com.example.katie.hrubiec_katheirne_getmethere.fragments.AddFrag;
 import com.google.android.gms.maps.model.LatLng;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -36,7 +29,7 @@ public class DirectionsHelper {
             inputStream = httpsURLConnection.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             String line = "";
             while ((line = bufferedReader.readLine()) != null){
                 stringBuffer.append(line);
@@ -55,7 +48,7 @@ public class DirectionsHelper {
                     e.printStackTrace();
                 }
             }
-            httpsURLConnection.disconnect();
+            Objects.requireNonNull(httpsURLConnection).disconnect();
         }
         return responseString;
     }
@@ -92,8 +85,7 @@ public class DirectionsHelper {
         String departureTime = "departure_time=now"; // currently my bday at 630 am - change to user input time(seconds of day and tiem) - duration i ntraffic valure(value is in seconds) on that day
         String param = str_org+"&"+str_dest+"&"+sensor+"&"+mode+"&"+trafficModel+"&"+departureTime+"&"+apiKey;
         String output = "json";
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output+"?"+ param;
-        return url;
+        return "https://maps.googleapis.com/maps/api/directions/" + output+"?"+ param;
     }
 
 

@@ -1,24 +1,13 @@
 package com.example.katie.hrubiec_katheirne_getmethere.fragments;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.storage.StorageManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +19,13 @@ import android.widget.TextView;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 
+import java.util.Objects;
+
 public class AlarmSettingsFrag extends Fragment implements View.OnClickListener {
 
-    AddDetailItemListener mListener;
+    private AddDetailItemListener mListener;
     private static final String ARG_ALARM = "ARG_ALARM";
-    Alarm alarm;
+    private Alarm alarm;
 
 
 
@@ -78,7 +69,7 @@ public class AlarmSettingsFrag extends Fragment implements View.OnClickListener 
             alarm = (Alarm) getArguments().getSerializable(ARG_ALARM);
         }
 
-        TextView setFor = getView().findViewById(R.id.setForText);
+        TextView setFor = Objects.requireNonNull(getView()).findViewById(R.id.setForText);
         setFor.setText(alarm.getStringDepart());
 
         EditText sound = getView().findViewById(R.id.sound);
@@ -111,24 +102,28 @@ public class AlarmSettingsFrag extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
 
-        EditText et = getView().findViewById(R.id.sound);
+        EditText et = Objects.requireNonNull(getView()).findViewById(R.id.sound);
         ImageView iv = getView().findViewById(R.id.image);
 
-        if (v.getId() == R.id.image) {
-            mListener.addImage();
-        } else if (v.getId() == R.id.sound) {
-            mListener.addSound();
-        } else if (v.getId() == R.id.saveButton) {
+        switch (v.getId()) {
+            case R.id.image:
+                mListener.addImage();
+                break;
+            case R.id.sound:
+                mListener.addSound();
+                break;
+            case R.id.saveButton:
 
-            if (!et.getText().toString().isEmpty() && iv.getDrawable()!=null) {
-                mListener.saveAlarm(alarm);
-            } else {
-                AlertDialog.Builder warning = new AlertDialog.Builder(getActivity());
-                warning.setMessage("You must choose an image and sound to continue");
-                warning.setPositiveButton("Okay", null);
-                AlertDialog alert = warning.create();
-                alert.show();
-            }
+                if (!et.getText().toString().isEmpty() && iv.getDrawable() != null) {
+                    mListener.saveAlarm(alarm);
+                } else {
+                    AlertDialog.Builder warning = new AlertDialog.Builder(getActivity());
+                    warning.setMessage("You must choose an image and sound to continue");
+                    warning.setPositiveButton("Okay", null);
+                    AlertDialog alert = warning.create();
+                    alert.show();
+                }
+                break;
         }
     }
 

@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 
 public class GoingOffActivity extends WearableActivity {
 
-    Alarm alarmGoingOFf;
+    private Alarm alarmGoingOFf;
 
 
     @Override

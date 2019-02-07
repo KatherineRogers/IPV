@@ -7,15 +7,12 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.fragments.ListFrag;
-import com.example.katie.hrubiec_katheirne_getmethere.fragments.SignInFragment;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -37,18 +34,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class ListActivity extends AppCompatActivity implements ListFrag.AddPlaceListener {
 
-    public static ArrayList<Alarm> alarms = new ArrayList<>();
-    public static final int MAINREQUEST = 1;
-    public static final String READWRITEOBJ = "READWRITEOBJ";
-    Alarm alarm;
-    protected Handler myHandler;
+    public static final ArrayList<Alarm> alarms = new ArrayList<>();
+    // --Commented out by Inspection (2/6/19, 11:13 PM):public static final int MAINREQUEST = 1;
+    // --Commented out by Inspection (2/6/19, 11:13 PM):public static final String READWRITEOBJ = "READWRITEOBJ";
+    // --Commented out by Inspection (2/6/19, 11:13 PM):Alarm alarm;
+    private Handler myHandler;
     private FirebaseAuth mAuth;
-    static DatabaseReference databaseAlarms;
-    static FirebaseUser user;
+    private static DatabaseReference databaseAlarms;
+    private static FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +71,8 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
         setList();
     }
 
-    public void setList() {
-        new NewThread("/my_path", alarms).start();
+    private void setList() {
+        new NewThread(alarms).start();
         getFragmentManager().beginTransaction().replace(R.id.frame, ListFrag.newInstance(alarms)).commit();
     }
 
@@ -95,7 +93,7 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
     public void deleteAlarm(final int position) {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final String userID = user.getUid();
+        final String userID = Objects.requireNonNull(user).getUid();
 
         DatabaseReference testRef = rootRef.child("users").child(userID);
         DatabaseReference alarmsRef = testRef.child("alarms");
@@ -150,10 +148,10 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
         String id = user.getUid();
         DatabaseReference userRef = databaseAlarms.child(id);
         String alarmId = databaseAlarms.push().getKey();
-        userRef.child("alarms").child(alarmId).setValue(newAlarm);
+        userRef.child("alarms").child(Objects.requireNonNull(alarmId)).setValue(newAlarm);
     }
 
-    public void loadFromFirebase() {
+    private void loadFromFirebase() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         final String userID = user.getUid();
 
@@ -190,27 +188,31 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
         alarmsRef.addListenerForSingleValueEvent(eventListener);
     }
 
-    public static void writeObjectInCache(Context context, String key, Object object) {
-        try {
-            FileOutputStream fos = context.openFileOutput(key, Context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(object);
-            oos.close();
-            fos.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
+// --Commented out by Inspection START (2/6/19, 11:13 PM):
+//    public static void writeObjectInCache(Context context, String key, Object object) {
+//        try {
+//            FileOutputStream fos = context.openFileOutput(key, Context.MODE_PRIVATE);
+//            ObjectOutputStream oos = new ObjectOutputStream(fos);
+//            oos.writeObject(object);
+//            oos.close();
+//            fos.close();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
+// --Commented out by Inspection STOP (2/6/19, 11:13 PM)
 
-    public static Object readObjectFromCache(Context context, String key) {
-        try {
-            FileInputStream fis = context.openFileInput(key);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            return ois.readObject();
-        } catch (Exception e) {
-            return null;
-        }
-    }
+// --Commented out by Inspection START (2/6/19, 11:13 PM):
+//    public static Object readObjectFromCache(Context context, String key) {
+//        try {
+//            FileInputStream fis = context.openFileInput(key);
+//            ObjectInputStream ois = new ObjectInputStream(fis);
+//            return ois.readObject();
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
+// --Commented out by Inspection STOP (2/6/19, 11:13 PM)
 
     @Override
     protected void onStop() {
@@ -227,7 +229,7 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
     @Override
     protected void onResume() {
         super.onResume();
-        new NewThread("/my_path", alarms).start();
+        new NewThread(alarms).start();
         alarms.clear();
         loadFromFirebase();
         setList();
@@ -237,7 +239,7 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //do something when add is finished or it is deleted
-        new NewThread("/my_path", alarms).start();
+        new NewThread(alarms).start();
         setList();
     }
 
@@ -247,14 +249,14 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
         public void onReceive(Context context, Intent intent) {
             loadFromFirebase();
             //do something with the recieved infro from watch aka update ui
-            new NewThread("/my_path", alarms).start();
+            new NewThread(alarms).start();
 
             setList();
         }
 
     }
 
-    public void sendmessage(ArrayList<Alarm> messageText) {
+    private void sendmessage(ArrayList<Alarm> messageText) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("messageText", messageText);
         Message msg = myHandler.obtainMessage();
@@ -263,11 +265,11 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
     }
 
     class NewThread extends Thread {
-        String path;
-        ArrayList<Alarm> message;
+        final String path;
+        final ArrayList<Alarm> message;
 
-        NewThread(String p, ArrayList<Alarm> m) {
-            path = p;
+        NewThread(ArrayList<Alarm> m) {
+            path = "/my_path";
             message = m;
         }
 

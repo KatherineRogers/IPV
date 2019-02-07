@@ -24,20 +24,21 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class CreateAccountFrag extends Fragment implements View.OnClickListener {
 
     private final String TAG = "FB_SIGNIN";
 
     // TODO: Add Auth members
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
 
     private EditText etPass;
     private EditText etEmail;
     private EditText etFirstName;
     private EditText etLastName;
-    DatabaseReference databaseUsers;
+    private DatabaseReference databaseUsers;
 
     public static CreateAccountFrag newInstance() {
 
@@ -57,7 +58,7 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        etEmail = getView().findViewById(R.id.email);
+        etEmail = Objects.requireNonNull(getView()).findViewById(R.id.email);
         etPass = getView().findViewById(R.id.password);
         etFirstName = getView().findViewById(R.id.firstname);
         etLastName = getView().findViewById(R.id.lastname);
@@ -67,13 +68,13 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
         mAuth = FirebaseAuth.getInstance();
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     Log.v(TAG, "user is signed in " + user.getUid());
-                }else{
+                } else {
                     Log.v(TAG, "currently signed out");
                 }
             }
@@ -95,7 +96,7 @@ public class CreateAccountFrag extends Fragment implements View.OnClickListener 
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Log.v("CLICK", "user was created");
-                    mAuth.getCurrentUser().getUid();
+                    Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                     //add user to database
                     String userId = mAuth.getCurrentUser().getUid();
                     Log.v("CLICK","user id:"+userId);

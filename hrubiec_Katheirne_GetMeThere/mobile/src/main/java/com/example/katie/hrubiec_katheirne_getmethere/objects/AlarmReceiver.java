@@ -1,7 +1,5 @@
 package com.example.katie.hrubiec_katheirne_getmethere.objects;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,15 +7,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.katie.hrubiec_katheirne_getmethere.R;
-import com.example.katie.hrubiec_katheirne_getmethere.activities.AddActivity;
 import com.example.katie.hrubiec_katheirne_getmethere.activities.GoingOffActivity;
-import com.example.katie.hrubiec_katheirne_getmethere.activities.ListActivity;
-import com.example.katie.hrubiec_katheirne_getmethere.fragments.AlarmFrag;
 import com.example.katie.hrubiec_katheirne_getmethere.helpers.DirectionsHelper;
 import com.example.katie.hrubiec_katheirne_getmethere.helpers.DirectionsParser;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,14 +23,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-
 public class AlarmReceiver extends BroadcastReceiver {
 
-    Alarm alarm;
-    Intent intent1;
-    Context cntxt;
-    Bundle bndl;
+    private Alarm alarm;
+    private Intent intent1;
+    private Context cntxt;
+    private Bundle bndl;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -130,7 +119,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                 Log.v("CLICK", "alarm4 is not null");
             }*/
                     } else {
-                        return;
                     }
                 }
             };
@@ -140,7 +128,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
 
-    public class TaskRequestDirections extends AsyncTask<String, Void, String> {
+    class TaskRequestDirections extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {

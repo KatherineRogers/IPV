@@ -11,10 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.katie.hrubiec_katheirne_getmethere.activities.MainActivity;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.CustomListAdapter;
@@ -78,7 +76,6 @@ public class ListFrag extends ListFragment {
                             }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            return;
                         }
                     })
                             .create()

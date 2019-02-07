@@ -1,7 +1,6 @@
 package com.example.katie.hrubiec_katheirne_getmethere.activities;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,17 +15,13 @@ import android.view.Menu;
 
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.fragments.AddFrag;
-import com.example.katie.hrubiec_katheirne_getmethere.fragments.AlarmFrag;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
-
-import static java.security.AccessController.getContext;
 
 public class AddActivity extends AppCompatActivity implements AddFrag.AddAlarmListener {
 
     public static final int ADDREQUEST = 0;
     public static Menu menu;
-    public static Alarm newAlarm;
-    String aurl;
+    // --Commented out by Inspection (2/6/19, 11:13 PM):public static Alarm newAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +37,14 @@ public class AddActivity extends AppCompatActivity implements AddFrag.AddAlarmLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.menu = menu;
+        AddActivity.menu = menu;
         getMenuInflater().inflate(R.menu.addresses_menu, menu);
-        this.menu.findItem(R.id.next).setEnabled(false);
-        this.menu.findItem(R.id.edit).setVisible(false);
+        AddActivity.menu.findItem(R.id.next).setEnabled(false);
+        AddActivity.menu.findItem(R.id.edit).setVisible(false);
         return true;
     }
 
-    public void startAlarmFrag(String url) {
+    private void startAlarmFrag(String url) {
         Intent addIntent = new Intent(this, AlarmActivity.class);
         //need to change to startforresult
         addIntent.putExtra("url", url);
@@ -59,8 +54,7 @@ public class AddActivity extends AppCompatActivity implements AddFrag.AddAlarmLi
 
     @Override
     public void addAlarm(String url) {
-        aurl = url;
-        startAlarmFrag(aurl);
+        startAlarmFrag(url);
     }
 
     @Override
@@ -111,7 +105,6 @@ public class AddActivity extends AppCompatActivity implements AddFrag.AddAlarmLi
                             }).setCancelable(false)
                             .create()
                             .show();
-                    ;
                 } else {
                     if (ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
                         //allowed

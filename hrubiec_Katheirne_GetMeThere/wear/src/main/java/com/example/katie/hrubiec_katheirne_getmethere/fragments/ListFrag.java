@@ -14,6 +14,7 @@ import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 ///wear
@@ -43,8 +44,8 @@ public class ListFrag extends ListFragment {
 
         ArrayList<Alarm> alarms = (ArrayList<Alarm>) getArguments().getSerializable(ARG_ALARMS);
 
-        ArrayAdapter<Alarm> adapter = new ArrayAdapter<Alarm>(
-                getActivity(), android.R.layout.simple_list_item_1, alarms
+        ArrayAdapter<Alarm> adapter = new ArrayAdapter<>(
+                getActivity(), android.R.layout.simple_list_item_1, Objects.requireNonNull(alarms)
         );
         setListAdapter(adapter);
     }

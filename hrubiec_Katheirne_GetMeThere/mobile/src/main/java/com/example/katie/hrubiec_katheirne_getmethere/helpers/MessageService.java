@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.example.katie.hrubiec_katheirne_getmethere.activities.DetailsActivity;
-import com.example.katie.hrubiec_katheirne_getmethere.activities.MainActivity;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
@@ -12,7 +11,6 @@ import com.google.android.gms.wearable.WearableListenerService;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
 
 public class MessageService extends WearableListenerService {
     @Override
@@ -27,9 +25,7 @@ public class MessageService extends WearableListenerService {
             try {
                 ObjectInputStream is = new ObjectInputStream(in);
                 DetailsActivity.alarm = (Alarm) is.readObject();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
 

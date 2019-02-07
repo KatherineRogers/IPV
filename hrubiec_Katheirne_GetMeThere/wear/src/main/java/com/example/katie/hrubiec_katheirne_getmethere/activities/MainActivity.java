@@ -10,18 +10,11 @@ import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.wearable.activity.WearableActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.fragments.ListFrag;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.AlarmReceiver;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
-import com.google.android.gms.wearable.Wearable;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,8 +22,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.Objects;
 
 ///wear
 
@@ -56,10 +48,10 @@ public class MainActivity extends WearableActivity implements ListFrag.ViewAlarm
         setList();
     }
 
-    public void setList() {
+    private void setList() {
         if (readObjectFromCache(getApplicationContext(), READWRITEOBJ) != null) {
             alarms = (ArrayList<Alarm>) readObjectFromCache(getApplicationContext(), READWRITEOBJ);
-            for (Alarm a: alarms){
+            for (Alarm a: Objects.requireNonNull(alarms)){
                 if(a.getWakeUpBefore() > System.currentTimeMillis()){
                     setAlarms(a);
                 }
@@ -77,7 +69,7 @@ public class MainActivity extends WearableActivity implements ListFrag.ViewAlarm
         }
     }
 
-    public void setAlarms(Alarm newAlarm){
+    private void setAlarms(Alarm newAlarm){
         AlarmManager mgr1 = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Intent intentAlarm1 = new Intent(this, AlarmReceiver.class);
         Bundle bundle1 = new Bundle();
@@ -88,7 +80,7 @@ public class MainActivity extends WearableActivity implements ListFrag.ViewAlarm
         Intent intent2 = new Intent(AlarmClock.ACTION_SET_ALARM);
         PendingIntent pendingIntent2 = PendingIntent.getActivity(this, 1, intent2, 0);
         AlarmManager.AlarmClockInfo alarmClockInfo = new AlarmManager.AlarmClockInfo(newAlarm.getWakeUpBefore(), pendingIntent2);
-        mgr1.setAlarmClock(alarmClockInfo, pendingIntent1);
+        Objects.requireNonNull(mgr1).setAlarmClock(alarmClockInfo, pendingIntent1);
     }
 
     public static void writeObjectInCache(Context context, String key, Object object) {
@@ -103,7 +95,7 @@ public class MainActivity extends WearableActivity implements ListFrag.ViewAlarm
         }
     }
 
-    public static Object readObjectFromCache(Context context, String key) {
+    private static Object readObjectFromCache(Context context, String key) {
         try {
             FileInputStream fis = context.openFileInput(key);
             ObjectInputStream ois = new ObjectInputStream(fis);

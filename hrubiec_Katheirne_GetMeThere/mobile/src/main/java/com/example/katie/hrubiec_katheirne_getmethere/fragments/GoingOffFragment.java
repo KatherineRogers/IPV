@@ -2,11 +2,8 @@ package com.example.katie.hrubiec_katheirne_getmethere.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,13 +28,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 public class GoingOffFragment extends Fragment {
 
-    Alarm alarmGoingOFf;
-    Ringtone ringtone;
-    MediaPlayer mediaPlayer;
-    SnoozeListener mListener;
+    private Alarm alarmGoingOFf;
+    // --Commented out by Inspection (2/6/19, 11:13 PM):Ringtone ringtone;
+    private MediaPlayer mediaPlayer;
+    private SnoozeListener mListener;
 
     public static GoingOffFragment newInstance() {
 
@@ -71,7 +69,7 @@ public class GoingOffFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Button dismiss = getView().findViewById(R.id.dismiss);
+        Button dismiss = Objects.requireNonNull(getView()).findViewById(R.id.dismiss);
         Button snooze = getView().findViewById(R.id.snooze);
 
         if (getActivity().getIntent() != null) {
@@ -114,7 +112,7 @@ public class GoingOffFragment extends Fragment {
 
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                final String userID = user.getUid();
+                final String userID = Objects.requireNonNull(user).getUid();
 
                 DatabaseReference testRef = rootRef.child("users").child(userID);
                 DatabaseReference alarmsRef = testRef.child("alarms");

@@ -9,13 +9,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.provider.Settings;
@@ -28,18 +24,17 @@ import android.util.Log;
 
 import com.example.katie.hrubiec_katheirne_getmethere.R;
 import com.example.katie.hrubiec_katheirne_getmethere.fragments.AlarmSettingsFrag;
-import com.example.katie.hrubiec_katheirne_getmethere.fragments.SignInFragment;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.AlarmReceiver;
 
+import java.util.Objects;
+
 public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSettingsFrag.AddDetailItemListener {
 
-    String chosenRingtone;
-    String chosenImage;
     private final int SELECT_PICTURE = 32;
-    Alarm alarm;
+    private Alarm alarm;
 
-    public void requestPermission(){
+    private void requestPermission(){
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
         } else if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
@@ -102,7 +97,7 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
         Intent intent2 = new Intent(AlarmClock.ACTION_SET_ALARM);
         PendingIntent pendingIntent2 = PendingIntent.getActivity(this, 1, intent2, 0);
         AlarmManager.AlarmClockInfo alarmClockInfo = new AlarmManager.AlarmClockInfo(newAlarm.getWakeUpBefore(), pendingIntent2);
-        mgr.setAlarmClock(alarmClockInfo, pendingIntent1);
+        Objects.requireNonNull(mgr).setAlarmClock(alarmClockInfo, pendingIntent1);
 
         //setTrafficChecks(newAlarm);
 
@@ -128,7 +123,7 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
 
             AlarmManager.AlarmClockInfo acBefore15 = new AlarmManager.AlarmClockInfo(beforeWakeUp15, pi2TrafficCheck15);
 
-            mgr1.setAlarmClock(acBefore15, piTrafficCheck15);
+            Objects.requireNonNull(mgr1).setAlarmClock(acBefore15, piTrafficCheck15);
 
             Log.v("CLICK","alarm set for 15 before");
         }else{
@@ -148,22 +143,24 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
             Ringtone rt = RingtoneManager.getRingtone(this, uri);
             String title = rt.getTitle(this);
 
+            String chosenRingtone;
             if (uri != null) {
-                this.chosenRingtone = uri.toString();
+                chosenRingtone = uri.toString();
                 alarm.setSounduri(chosenRingtone);
                 loadFrag();
             } else {
-                this.chosenRingtone = null;
+                chosenRingtone = null;
             }
         } else if (resultCode == Activity.RESULT_OK && requestCode == SELECT_PICTURE) {
             Uri imageUri = intent.getData();
+            String chosenImage;
             if (imageUri != null) {
 
-                this.chosenImage = imageUri.toString();
+                chosenImage = imageUri.toString();
                 alarm.setImageuri(chosenImage);
                 loadFrag();
             } else {
-                this.chosenImage = null;
+                chosenImage = null;
             }
         }
     }
@@ -198,7 +195,6 @@ public class AlarmSettingsActivity extends AppCompatActivity implements AlarmSet
                             }).setCancelable(false)
                             .create()
                             .show();
-                    ;
                 } else {
                     if (ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
                         //allowed

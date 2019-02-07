@@ -1,39 +1,18 @@
 package com.example.katie.hrubiec_katheirne_getmethere.activities;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.example.katie.hrubiec_katheirne_getmethere.R;
-import com.example.katie.hrubiec_katheirne_getmethere.fragments.AddFrag;
 import com.example.katie.hrubiec_katheirne_getmethere.fragments.AlarmFrag;
 import com.example.katie.hrubiec_katheirne_getmethere.objects.Alarm;
-import com.example.katie.hrubiec_katheirne_getmethere.objects.AlarmReceiver;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class AlarmActivity extends AppCompatActivity implements AlarmFrag.FinsihAddListener {
 
     public static final int ADDALARMREQUEST = 1;
-    String url;
-    final static int RQS_1 = 1;
+    private String url;
+    // --Commented out by Inspection (2/6/19, 11:13 PM):final static int RQS_1 = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
