@@ -1,0 +1,6 @@
+framework module Pods_hrubiecKatherine_GetMeThere {
+  umbrella header "Pods-hrubiecKatherine_GetMeThere-umbrella.h"
+
+  export *
+  module * { export * }
+}

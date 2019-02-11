@@ -1,0 +1,6 @@
+framework module Pods_hrubiecKatherine_GetMeThereUITests {
+  umbrella header "Pods-hrubiecKatherine_GetMeThereUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
