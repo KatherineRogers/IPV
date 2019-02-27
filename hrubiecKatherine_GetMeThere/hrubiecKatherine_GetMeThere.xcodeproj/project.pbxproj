@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0263DE6D221F29B9005D1936 /* StartingEndingLocViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0263DE6C221F29B9005D1936 /* StartingEndingLocViewController.swift */; };
+		0263DE76222081A5005D1936 /* DateTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0263DE75222081A5005D1936 /* DateTimePickerViewController.swift */; };
+		02DF27F82225FFBE0003ABEE /* ImageSoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DF27F72225FFBE0003ABEE /* ImageSoundViewController.swift */; };
 		02EAA5EA2211065500C94CD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EAA5E92211065500C94CD0 /* AppDelegate.swift */; };
 		02EAA5EC2211065500C94CD0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EAA5EB2211065500C94CD0 /* ViewController.swift */; };
 		02EAA5EF2211065500C94CD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02EAA5ED2211065500C94CD0 /* Main.storyboard */; };
@@ -15,6 +18,11 @@
 		02EAA5FF2211065800C94CD0 /* hrubiecKatherine_GetMeThereTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EAA5FE2211065800C94CD0 /* hrubiecKatherine_GetMeThereTests.swift */; };
 		02EAA60A2211065800C94CD0 /* hrubiecKatherine_GetMeThereUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EAA6092211065800C94CD0 /* hrubiecKatherine_GetMeThereUITests.swift */; };
 		02EAA618221107A900C94CD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 02EAA617221107A900C94CD0 /* GoogleService-Info.plist */; };
+		02F1BAF8221DCF6C00184666 /* FirstScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F1BAF7221DCF6C00184666 /* FirstScreenViewController.swift */; };
+		02F1BAFE221DDAC100184666 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F1BAFD221DDAC100184666 /* SignUpViewController.swift */; };
+		02F1BB00221DEF0C00184666 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F1BAFF221DEF0C00184666 /* ListViewController.swift */; };
+		02F1BB02221DF34500184666 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F1BB01221DF34500184666 /* Alarm.swift */; };
+		02F1BB04221E20AB00184666 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F1BB03221E20AB00184666 /* DetailViewController.swift */; };
 		4A494FC208113BA87849F7B1 /* Pods_hrubiecKatherine_GetMeThereTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FF22186A5600480E890D03D /* Pods_hrubiecKatherine_GetMeThereTests.framework */; };
 		730AC1B0C50572151711B00B /* Pods_hrubiecKatherine_GetMeThere.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2BE97C086B6A5C001FFDA1 /* Pods_hrubiecKatherine_GetMeThere.framework */; };
 		C083F9992ED8CE6FC475E2EB /* Pods_hrubiecKatherine_GetMeThereUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD9B2054392871B883A7EBB1 /* Pods_hrubiecKatherine_GetMeThereUITests.framework */; };
@@ -39,6 +47,10 @@
 
 /* Begin PBXFileReference section */
 		013182FE98690158A68C2220 /* Pods-hrubiecKatherine_GetMeThereUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hrubiecKatherine_GetMeThereUITests.release.xcconfig"; path = "Target Support Files/Pods-hrubiecKatherine_GetMeThereUITests/Pods-hrubiecKatherine_GetMeThereUITests.release.xcconfig"; sourceTree = "<group>"; };
+		0263DE6C221F29B9005D1936 /* StartingEndingLocViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartingEndingLocViewController.swift; sourceTree = "<group>"; };
+		0263DE72221FB369005D1936 /* hrubiecKatherine_GetMeThere-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "hrubiecKatherine_GetMeThere-Bridging-Header.h"; sourceTree = "<group>"; };
+		0263DE75222081A5005D1936 /* DateTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerViewController.swift; sourceTree = "<group>"; };
+		02DF27F72225FFBE0003ABEE /* ImageSoundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSoundViewController.swift; sourceTree = "<group>"; };
 		02EAA5E62211065500C94CD0 /* hrubiecKatherine_GetMeThere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hrubiecKatherine_GetMeThere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02EAA5E92211065500C94CD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02EAA5EB2211065500C94CD0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -53,6 +65,11 @@
 		02EAA6092211065800C94CD0 /* hrubiecKatherine_GetMeThereUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hrubiecKatherine_GetMeThereUITests.swift; sourceTree = "<group>"; };
 		02EAA60B2211065800C94CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		02EAA617221107A900C94CD0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		02F1BAF7221DCF6C00184666 /* FirstScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenViewController.swift; sourceTree = "<group>"; };
+		02F1BAFD221DDAC100184666 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		02F1BAFF221DEF0C00184666 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		02F1BB01221DF34500184666 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
+		02F1BB03221E20AB00184666 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		4A2BE97C086B6A5C001FFDA1 /* Pods_hrubiecKatherine_GetMeThere.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_hrubiecKatherine_GetMeThere.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		506F7112FB1A32387C8E3646 /* Pods-hrubiecKatherine_GetMeThere.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hrubiecKatherine_GetMeThere.debug.xcconfig"; path = "Target Support Files/Pods-hrubiecKatherine_GetMeThere/Pods-hrubiecKatherine_GetMeThere.debug.xcconfig"; sourceTree = "<group>"; };
 		817178BF980F3BEC7EACA33E /* Pods-hrubiecKatherine_GetMeThereTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hrubiecKatherine_GetMeThereTests.release.xcconfig"; path = "Target Support Files/Pods-hrubiecKatherine_GetMeThereTests/Pods-hrubiecKatherine_GetMeThereTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -116,13 +133,22 @@
 		02EAA5E82211065500C94CD0 /* hrubiecKatherine_GetMeThere */ = {
 			isa = PBXGroup;
 			children = (
-				02EAA617221107A900C94CD0 /* GoogleService-Info.plist */,
 				02EAA5E92211065500C94CD0 /* AppDelegate.swift */,
+				02EAA617221107A900C94CD0 /* GoogleService-Info.plist */,
+				02F1BAF7221DCF6C00184666 /* FirstScreenViewController.swift */,
 				02EAA5EB2211065500C94CD0 /* ViewController.swift */,
+				02F1BAFD221DDAC100184666 /* SignUpViewController.swift */,
+				02F1BAFF221DEF0C00184666 /* ListViewController.swift */,
+				02F1BB03221E20AB00184666 /* DetailViewController.swift */,
+				0263DE6C221F29B9005D1936 /* StartingEndingLocViewController.swift */,
+				0263DE75222081A5005D1936 /* DateTimePickerViewController.swift */,
+				02DF27F72225FFBE0003ABEE /* ImageSoundViewController.swift */,
+				02F1BB01221DF34500184666 /* Alarm.swift */,
 				02EAA5ED2211065500C94CD0 /* Main.storyboard */,
 				02EAA5F02211065800C94CD0 /* Assets.xcassets */,
 				02EAA5F22211065800C94CD0 /* LaunchScreen.storyboard */,
 				02EAA5F52211065800C94CD0 /* Info.plist */,
+				0263DE72221FB369005D1936 /* hrubiecKatherine_GetMeThere-Bridging-Header.h */,
 			);
 			path = hrubiecKatherine_GetMeThere;
 			sourceTree = "<group>";
@@ -155,7 +181,6 @@
 				869458957FA4473D66A8E99C /* Pods-hrubiecKatherine_GetMeThereUITests.debug.xcconfig */,
 				013182FE98690158A68C2220 /* Pods-hrubiecKatherine_GetMeThereUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -181,6 +206,7 @@
 				02EAA5E32211065500C94CD0 /* Frameworks */,
 				02EAA5E42211065500C94CD0 /* Resources */,
 				5F5E71DC097688BAA77C2BF9 /* [CP] Embed Pods Frameworks */,
+				14EC01A25F5682F82A2E8003 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -241,6 +267,7 @@
 				TargetAttributes = {
 					02EAA5E52211065500C94CD0 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 					02EAA5F92211065800C94CD0 = {
 						CreatedOnToolsVersion = 10.1;
@@ -301,6 +328,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		14EC01A25F5682F82A2E8003 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-hrubiecKatherine_GetMeThere/Pods-hrubiecKatherine_GetMeThere-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hrubiecKatherine_GetMeThere/Pods-hrubiecKatherine_GetMeThere-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		39A98767BD06AFC0D9F2D480 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -403,7 +452,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				02EAA5EC2211065500C94CD0 /* ViewController.swift in Sources */,
+				02F1BAF8221DCF6C00184666 /* FirstScreenViewController.swift in Sources */,
+				02DF27F82225FFBE0003ABEE /* ImageSoundViewController.swift in Sources */,
+				02F1BB00221DEF0C00184666 /* ListViewController.swift in Sources */,
 				02EAA5EA2211065500C94CD0 /* AppDelegate.swift in Sources */,
+				02F1BB02221DF34500184666 /* Alarm.swift in Sources */,
+				02F1BAFE221DDAC100184666 /* SignUpViewController.swift in Sources */,
+				0263DE6D221F29B9005D1936 /* StartingEndingLocViewController.swift in Sources */,
+				0263DE76222081A5005D1936 /* DateTimePickerViewController.swift in Sources */,
+				02F1BB04221E20AB00184666 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +636,7 @@
 			baseConfigurationReference = 506F7112FB1A32387C8E3646 /* Pods-hrubiecKatherine_GetMeThere.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 88PN9Q8BCY;
 				INFOPLIST_FILE = hrubiecKatherine_GetMeThere/Info.plist;
@@ -588,6 +646,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "asdf.hrubiecKatherine-GetMeThere";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "hrubiecKatherine_GetMeThere/hrubiecKatherine_GetMeThere-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -598,6 +658,7 @@
 			baseConfigurationReference = C6D74FDF0EA05D4CE9670EA4 /* Pods-hrubiecKatherine_GetMeThere.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 88PN9Q8BCY;
 				INFOPLIST_FILE = hrubiecKatherine_GetMeThere/Info.plist;
@@ -607,6 +668,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "asdf.hrubiecKatherine-GetMeThere";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "hrubiecKatherine_GetMeThere/hrubiecKatherine_GetMeThere-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -3,6 +3,7 @@ package com.example.katie.hrubiec_katheirne_getmethere.helpers;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -85,6 +86,7 @@ public class DirectionsHelper {
         String departureTime = "departure_time=now"; // currently my bday at 630 am - change to user input time(seconds of day and tiem) - duration i ntraffic valure(value is in seconds) on that day
         String param = str_org+"&"+str_dest+"&"+sensor+"&"+mode+"&"+trafficModel+"&"+departureTime+"&"+apiKey;
         String output = "json";
+        Log.v("URL ","https://maps.googleapis.com/maps/api/directions/" + output+"?"+ param);
         return "https://maps.googleapis.com/maps/api/directions/" + output+"?"+ param;
     }
 
