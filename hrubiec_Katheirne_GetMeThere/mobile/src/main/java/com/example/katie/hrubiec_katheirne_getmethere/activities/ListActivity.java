@@ -128,12 +128,6 @@ public class ListActivity extends AppCompatActivity implements ListFrag.AddPlace
         Intent addIntent = new Intent(this, DetailsActivity.class);
         addIntent.putExtra("alarm", alarms.get(position));
 
-
-
-
-
-
-
         startActivity(addIntent);
     }
 

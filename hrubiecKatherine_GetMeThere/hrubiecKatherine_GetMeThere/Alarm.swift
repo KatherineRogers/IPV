@@ -17,12 +17,10 @@ class Alarm{
     let endingLoc : String
     let wakeUpBefore : CLong
     let identifier : CLong
-    let imageuri : String
-    let sounduri : String
     let userID : String
     
     init(departureTime : CLong,arrivalTime : CLong,durationInTraffic : CLong,startingLoc : String,
-         endingLoc : String,wakeUpBefore : CLong,identifier : CLong,imageuri : String,sounduri : String,userID : String) {
+         endingLoc : String,wakeUpBefore : CLong,identifier : CLong,userID : String) {
         self.departureTime = departureTime
         self.arrivalTime = arrivalTime
         self.durationInTraffic = durationInTraffic
@@ -30,8 +28,6 @@ class Alarm{
         self.endingLoc = endingLoc
         self.wakeUpBefore = wakeUpBefore
         self.identifier = identifier
-        self.imageuri = imageuri
-        self.sounduri = sounduri
         self.userID = userID
     }
     

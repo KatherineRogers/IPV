@@ -32,7 +32,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(_ animated: Bool) {
         print("alarms - \(alarms.count)")
-        tablev.reloadData()
+        loadAlarms()
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -47,6 +48,9 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func loadAlarms(){
+        if !alarms.isEmpty{
+            alarms.removeAll()
+        }
         let users = Database.database().reference().child("users")
         let currentUser : String = (Auth.auth().currentUser?.uid)!
         let ualarms = users.child(currentUser).child("alarms")
@@ -61,12 +65,12 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let startLoc = getData["startingLoc"] as! String
                     let endLoc = getData["endingLoc"] as! String
                     let ident = getData["identifier"] as! CLong
-                    let img = getData["imageuri"] as! String
                     let wub = getData["wakeUpBefore"] as! CLong
-                    let sound = getData["sounduri"] as! String
                     
-                    let alarm = Alarm(departureTime: departTime, arrivalTime: arrivalTime, durationInTraffic: dit, startingLoc: startLoc, endingLoc: endLoc, wakeUpBefore: wub, identifier: ident, imageuri: img, sounduri: sound, userID: currentUser)
+                    let alarm = Alarm(departureTime: departTime, arrivalTime: arrivalTime, durationInTraffic: dit, startingLoc: startLoc, endingLoc: endLoc, wakeUpBefore: wub, identifier: ident,  userID: currentUser)
+                    
                     self.alarms.append(alarm)
+                    self.tablev.reloadData()
                 }
             }
         }
