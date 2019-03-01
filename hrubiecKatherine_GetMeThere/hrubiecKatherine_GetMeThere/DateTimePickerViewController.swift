@@ -12,7 +12,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseCore
-
+import AVFoundation
 
 class DateTimePickerViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
 
@@ -35,6 +35,7 @@ class DateTimePickerViewController: UIViewController, MKMapViewDelegate, UITextF
      let userID : String
      */
     
+
     
     
     
@@ -77,31 +78,10 @@ class DateTimePickerViewController: UIViewController, MKMapViewDelegate, UITextF
         arrival.text = dateFormatter.string(from: departDate!)
         departure.text = dateFormatter.string(from: date!)
     }
+    
 
-    func saveToFirebase(){
-        let database = Database.database().reference()
-        let user = Auth.auth().currentUser!.uid
-        let usersList = database.child("users").child(user)
-        let timeInSecondsArrive: TimeInterval = senderDate.timeIntervalSince1970
-        let tisdepart: TimeInterval = dtdate.timeIntervalSince1970
-        let tisidentity: TimeInterval = Date().timeIntervalSince1970
-        let tisi = NSInteger(tisidentity)
-        let tisd = NSInteger(tisdepart)
-        let tisa = NSInteger(timeInSecondsArrive)
-        
-        let alarmData: [String:Any] = [
-            "arrivalTime" : tisa,
-            "departureTime" : tisd,
-            "durationInTraffic" : durationInTraffic,
-            "endingLoc" : endLoc,
-            "identifier" : tisi,
-            "startingLoc" : startLoc,
-            "wakeUpBefore" : wakeUpBefore
-        ]
-        
-        let ref = usersList.child("alarms").childByAutoId()
-        ref.setValue(alarmData)
-    }
+
+    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
             let aSet = NSCharacterSet(charactersIn:"0123456789").inverted
@@ -189,22 +169,22 @@ class DateTimePickerViewController: UIViewController, MKMapViewDelegate, UITextF
     @IBAction func saveDetailsButton(_ sender: Any) {
         if wakeUp.text?.trimmingCharacters(in: .whitespaces) != ""{
             wakeUpBefore = Int(wakeUp.text!)!
-            saveToFirebase()
-            navigationController?.popToRootViewController(animated: true)
-            //performSegue(withIdentifier: "toImageSound", sender: self)
+            //saveToFirebase()
+            //navigationController?.popToRootViewController(animated: true)
+            performSegue(withIdentifier: "chooseImage", sender: self)
         }
         
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let dVC = segue.destination as! ImageSoundViewController
-//        dVC.dtdate = dtdate
-//        dVC.senderDate = senderDate
-//        dVC.durationInTraffic = durationInTraffic
-//        dVC.startLoc = startLoc
-//        dVC.endLoc = endLoc
-//        dVC.wakeUpBefore = wakeUpBefore
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let dVC = segue.destination as! ImageSoundViewController
+        dVC.dtdate = dtdate
+        dVC.senderDate = senderDate
+        dVC.durationInTraffic = durationInTraffic
+        dVC.startLoc = startLoc
+        dVC.endLoc = endLoc
+        dVC.wakeUpBefore = wakeUpBefore
+    }
 
     func getJSON(url:String){
         //let convertstring = URL(string: url)

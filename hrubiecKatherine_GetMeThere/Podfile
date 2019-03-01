@@ -10,6 +10,7 @@ target 'hrubiecKatherine_GetMeThere' do
         pod 'Firebase/Auth'
         pod 'Firebase/Database'
 	pod 'GoogleMaps'
+	pod 'Firebase/Storage'
 
   target 'hrubiecKatherine_GetMeThereTests' do
     inherit! :search_paths

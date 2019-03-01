@@ -9,9 +9,10 @@
 import UIKit
 import Firebase
 import GoogleMaps
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -20,7 +21,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         GMSServices.provideAPIKey("AIzaSyACz6AjczEW5-jt3EW6lYsmjfO84U2W3jI")
+        let center = UNUserNotificationCenter.current()
+        let options: UNAuthorizationOptions = [.sound, .alert]
+        center.requestAuthorization(options: options) { (granted, error) in
+            if error != nil{
+                print(error)
+            }
+        }
+        center.delegate = self
         return true
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge,.sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+         let mainStoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let goingOff = mainStoryboard.instantiateViewController(withIdentifier: "alarmDetails") as! AlarmGoingOffViewController
+        
+        self.window?.rootViewController = goingOff
+        // tell the app that we have finished processing the user’s action / response
+        completionHandler()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -44,7 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
 
 }
 

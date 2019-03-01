@@ -18,9 +18,10 @@ class Alarm{
     let wakeUpBefore : CLong
     let identifier : CLong
     let userID : String
+    let imageUrl : String
     
     init(departureTime : CLong,arrivalTime : CLong,durationInTraffic : CLong,startingLoc : String,
-         endingLoc : String,wakeUpBefore : CLong,identifier : CLong,userID : String) {
+         endingLoc : String,wakeUpBefore : CLong,identifier : CLong,userID : String, imageUrl : String) {
         self.departureTime = departureTime
         self.arrivalTime = arrivalTime
         self.durationInTraffic = durationInTraffic
@@ -29,6 +30,7 @@ class Alarm{
         self.wakeUpBefore = wakeUpBefore
         self.identifier = identifier
         self.userID = userID
+        self.imageUrl = imageUrl
     }
     
     

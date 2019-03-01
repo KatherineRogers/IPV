@@ -10,6 +10,8 @@
 		0263DE6D221F29B9005D1936 /* StartingEndingLocViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0263DE6C221F29B9005D1936 /* StartingEndingLocViewController.swift */; };
 		0263DE76222081A5005D1936 /* DateTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0263DE75222081A5005D1936 /* DateTimePickerViewController.swift */; };
 		02DF27F82225FFBE0003ABEE /* ImageSoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DF27F72225FFBE0003ABEE /* ImageSoundViewController.swift */; };
+		02DF27FA22286D7B0003ABEE /* service-bell_daniel_simion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 02DF27F922286D7A0003ABEE /* service-bell_daniel_simion.wav */; };
+		02DF27FC222871500003ABEE /* AlarmGoingOffViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DF27FB222871500003ABEE /* AlarmGoingOffViewController.swift */; };
 		02EAA5EA2211065500C94CD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EAA5E92211065500C94CD0 /* AppDelegate.swift */; };
 		02EAA5EC2211065500C94CD0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EAA5EB2211065500C94CD0 /* ViewController.swift */; };
 		02EAA5EF2211065500C94CD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02EAA5ED2211065500C94CD0 /* Main.storyboard */; };
@@ -51,6 +53,8 @@
 		0263DE72221FB369005D1936 /* hrubiecKatherine_GetMeThere-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "hrubiecKatherine_GetMeThere-Bridging-Header.h"; sourceTree = "<group>"; };
 		0263DE75222081A5005D1936 /* DateTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerViewController.swift; sourceTree = "<group>"; };
 		02DF27F72225FFBE0003ABEE /* ImageSoundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSoundViewController.swift; sourceTree = "<group>"; };
+		02DF27F922286D7A0003ABEE /* service-bell_daniel_simion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "service-bell_daniel_simion.wav"; sourceTree = "<group>"; };
+		02DF27FB222871500003ABEE /* AlarmGoingOffViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmGoingOffViewController.swift; sourceTree = "<group>"; };
 		02EAA5E62211065500C94CD0 /* hrubiecKatherine_GetMeThere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hrubiecKatherine_GetMeThere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02EAA5E92211065500C94CD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02EAA5EB2211065500C94CD0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -143,8 +147,10 @@
 				0263DE6C221F29B9005D1936 /* StartingEndingLocViewController.swift */,
 				0263DE75222081A5005D1936 /* DateTimePickerViewController.swift */,
 				02DF27F72225FFBE0003ABEE /* ImageSoundViewController.swift */,
+				02DF27FB222871500003ABEE /* AlarmGoingOffViewController.swift */,
 				02F1BB01221DF34500184666 /* Alarm.swift */,
 				02EAA5ED2211065500C94CD0 /* Main.storyboard */,
+				02DF27F922286D7A0003ABEE /* service-bell_daniel_simion.wav */,
 				02EAA5F02211065800C94CD0 /* Assets.xcassets */,
 				02EAA5F22211065800C94CD0 /* LaunchScreen.storyboard */,
 				02EAA5F52211065800C94CD0 /* Info.plist */,
@@ -268,6 +274,11 @@
 					02EAA5E52211065500C94CD0 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					02EAA5F92211065800C94CD0 = {
 						CreatedOnToolsVersion = 10.1;
@@ -308,6 +319,7 @@
 				02EAA618221107A900C94CD0 /* GoogleService-Info.plist in Resources */,
 				02EAA5F12211065800C94CD0 /* Assets.xcassets in Resources */,
 				02EAA5EF2211065500C94CD0 /* Main.storyboard in Resources */,
+				02DF27FA22286D7B0003ABEE /* service-bell_daniel_simion.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +467,7 @@
 				02F1BAF8221DCF6C00184666 /* FirstScreenViewController.swift in Sources */,
 				02DF27F82225FFBE0003ABEE /* ImageSoundViewController.swift in Sources */,
 				02F1BB00221DEF0C00184666 /* ListViewController.swift in Sources */,
+				02DF27FC222871500003ABEE /* AlarmGoingOffViewController.swift in Sources */,
 				02EAA5EA2211065500C94CD0 /* AppDelegate.swift in Sources */,
 				02F1BB02221DF34500184666 /* Alarm.swift in Sources */,
 				02F1BAFE221DDAC100184666 /* SignUpViewController.swift in Sources */,
